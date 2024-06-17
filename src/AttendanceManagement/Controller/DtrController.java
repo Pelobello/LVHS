@@ -63,7 +63,7 @@ public void populateDtr(JTable table, ModelDtr data) {
 "        ELSE IFNULL(TIMEDIFF(ad.PmTimeOut, ad.PmTimeIn), '00:00:00')\n" +
 "    END AS TotalPmWorkHours,\n" +
 "    CASE\n" +
-"        WHEN ad.AmTimeIn IS NULL OR ad.AmTimeOut IS NULL OR ad.PmTimeIn IS NULL OR ad.PmTimeOut IS NULL THEN ''\n" +
+"        WHEN ad.AmTimeIn IS NULL AND ad.AmTimeOut IS NULL AND ad.PmTimeIn IS NULL AND ad.PmTimeOut IS NULL THEN ''\n" +
 "        ELSE SEC_TO_TIME(\n" +
 "            IFNULL(TIME_TO_SEC(TIMEDIFF(ad.AmTimeOut, ad.AmTimeIn)), 0) +\n" +
 "            IFNULL(TIME_TO_SEC(TIMEDIFF(ad.PmTimeOut, ad.PmTimeIn)), 0)\n" +
