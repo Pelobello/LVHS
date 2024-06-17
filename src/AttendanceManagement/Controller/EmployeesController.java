@@ -19,8 +19,12 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
+import javax.imageio.IIOImage;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.ImageOutputStream;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import raven.glasspanepopup.GlassPanePopup;
@@ -285,23 +289,52 @@ public class EmployeesController {
         return null;
     }
 
-    private BufferedImage convertImageIconToBufferedImage(ImageIcon imageIcon) {
-        Image image = imageIcon.getImage();
-        BufferedImage bufferedImage = new BufferedImage(
-                imageIcon.getIconWidth(),
-                imageIcon.getIconHeight(),
-                BufferedImage.TYPE_INT_ARGB // Use ARGB to preserve transparency
-        );
-        Graphics2D g2d = bufferedImage.createGraphics();
-        g2d.drawImage(image, 0, 0, null);
-        g2d.dispose();
-        return bufferedImage;
-    }
+private BufferedImage convertImageIconToBufferedImage(ImageIcon imageIcon) {
+    Image image = imageIcon.getImage();
+    int originalWidth = image.getWidth(null);
+    int originalHeight = image.getHeight(null);
 
-    private String encodeImageToBase64(BufferedImage bufferedImage) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.write(bufferedImage, "png", baos); // Use PNG to preserve transparency
-        byte[] imageInByte = baos.toByteArray();
-        return Base64.getEncoder().encodeToString(imageInByte);
-    }
+    // Set new dimensions, maintaining the aspect ratio
+    int newWidth = 250;
+    int newHeight = (newWidth * originalHeight) / originalWidth;
+
+    // Create a buffered image with the new dimensions
+    BufferedImage bufferedImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
+
+    // Draw the scaled image
+    Graphics2D g2d = bufferedImage.createGraphics();
+    g2d.drawImage(image, 0, 0, newWidth, newHeight, null);
+    g2d.dispose();
+
+    return bufferedImage;
+}
+
+ private BufferedImage convertToRGB(BufferedImage image) {
+    BufferedImage rgbImage = new BufferedImage(
+        image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+    Graphics2D g2d = rgbImage.createGraphics();
+    g2d.drawImage(image, 0, 0, null);
+    g2d.dispose();
+    return rgbImage;
+}
+
+private String encodeImageToBase64(BufferedImage bufferedImage) throws IOException {
+    // Convert ARGB image to RGB
+    BufferedImage rgbImage = convertToRGB(bufferedImage);
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    ImageOutputStream ios = ImageIO.createImageOutputStream(baos);
+    ImageWriter writer = ImageIO.getImageWritersByFormatName("png").next();
+    writer.setOutput(ios);
+
+    ImageWriteParam param = writer.getDefaultWriteParam();
+    param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+    param.setCompressionQuality(0.7f); // Adjust quality from 0.0 to 1.0
+
+    writer.write(null, new IIOImage(rgbImage, null, null), param);
+    writer.dispose();
+
+    byte[] imageInByte = baos.toByteArray();
+    return Base64.getEncoder().encodeToString(imageInByte);
+}
 }

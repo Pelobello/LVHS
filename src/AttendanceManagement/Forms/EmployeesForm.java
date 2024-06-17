@@ -400,7 +400,7 @@ public class EmployeesForm extends javax.swing.JPanel {
        
         try {
             AddEmployees();
-            textFieldtoNone();
+//            textFieldtoNone();
             } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Invalid EmployeesID or Plantilla Item. Please enter a valid number.");
         

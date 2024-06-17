@@ -104,6 +104,19 @@ private TableCellRenderer getAlignmentCellRenderer(TableCellRenderer oldRender, 
                             label.setForeground(Color.BLACK); // default color
                         }
                     }
+                     if (column == 3) {
+                       try {
+                            Date cellTime = parseTime(value.toString());
+                            Date thresholdTime = parseTime("1:01 PM");
+                            if (cellTime.before(thresholdTime)) {
+                                label.setForeground(new Color(17, 182, 62)); // green color
+                            } else {
+                                label.setForeground(Color.RED); // red color
+                            }
+                        } catch (ParseException e) {
+                            label.setForeground(Color.BLACK); // default color
+                        }
+                    }
                 }
             }
             return com;
@@ -509,7 +522,7 @@ private void testReport(){
     }//GEN-LAST:event_SearchFieldActionPerformed
 
     private void MonthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MonthActionPerformed
-        // TODO add your handling code here:
+     
     }//GEN-LAST:event_MonthActionPerformed
 
     private void pdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pdfActionPerformed
