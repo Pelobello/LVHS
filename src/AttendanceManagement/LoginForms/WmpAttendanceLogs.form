@@ -21,7 +21,10 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <Component id="jPanel1" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -37,22 +40,34 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="676" max="32767" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <EmptySpace pref="678" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="DepartMent" alignment="0" min="-2" pref="108" max="-2" attributes="0"/>
-                      <Component id="timeLbl" min="-2" pref="592" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="arrival" min="-2" pref="270" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="departure" min="-2" pref="270" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="departmentTxtField" min="-2" pref="102" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="1136" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="timeLbl" min="-2" pref="592" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="amTimeIn" min="-2" pref="270" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="amTimeOut" min="-2" pref="270" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jPanel3" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="pmTimein" min="-2" pref="270" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="pmTimeOut" min="-2" pref="270" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
-                          <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                          <Component id="jPanel3" alignment="0" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="642" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="652" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -61,24 +76,29 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="arrival" alignment="3" min="-2" pref="54" max="-2" attributes="0"/>
-                      <Component id="departure" alignment="3" min="-2" pref="54" max="-2" attributes="0"/>
+                      <Component id="amTimeIn" alignment="3" min="-2" pref="54" max="-2" attributes="0"/>
+                      <Component id="amTimeOut" alignment="3" min="-2" pref="54" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="pmTimein" alignment="3" min="-2" pref="54" max="-2" attributes="0"/>
+                      <Component id="pmTimeOut" alignment="3" min="-2" pref="54" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="timeLbl" pref="44" max="32767" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="timeLbl" pref="69" max="32767" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="DepartMent" min="-2" pref="34" max="-2" attributes="0"/>
+                  <Component id="departmentTxtField" min="-2" pref="34" max="-2" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="arrival">
+        <Component class="javax.swing.JButton" name="amTimeIn">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="54" green="33" red="0" type="rgb"/>
@@ -89,13 +109,13 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="TIME IN"/>
+            <Property name="text" type="java.lang.String" value="AM TIME IN"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="arrivalActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="amTimeInActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="departure">
+        <Component class="javax.swing.JButton" name="amTimeOut">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="54" green="33" red="0" type="rgb"/>
@@ -106,13 +126,13 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="TIME OUT"/>
+            <Property name="text" type="java.lang.String" value="AM TIME OUT"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="departureActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="amTimeOutActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="DepartMent">
+        <Component class="javax.swing.JLabel" name="departmentTxtField">
           <Properties>
             <Property name="text" type="java.lang.String" value="JHS"/>
           </Properties>
@@ -150,12 +170,12 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="FullName" max="32767" attributes="0"/>
+                      <Component id="nameTxtField" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="employeesID" max="32767" attributes="0"/>
+                      <Component id="idTxtField" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -166,12 +186,12 @@
                       <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                       <Component id="SearchField" min="-2" pref="57" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="EmployeesImage" min="-2" pref="550" max="-2" attributes="0"/>
+                      <Component id="EmployeesImage" min="-2" pref="501" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="nameTxtField" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="FullName" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="employeesID" min="-2" pref="53" max="-2" attributes="0"/>
-                      <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
+                      <Component id="idTxtField" min="-2" pref="53" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -205,7 +225,7 @@
                 <Property name="useNullLayout" type="boolean" value="true"/>
               </Layout>
             </Container>
-            <Component class="javax.swing.JLabel" name="FullName">
+            <Component class="javax.swing.JLabel" name="nameTxtField">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="45" style="1"/>
@@ -214,7 +234,7 @@
                 <Property name="text" type="java.lang.String" value="Juan Dela Cruz"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="employeesID">
+            <Component class="javax.swing.JLabel" name="idTxtField">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="45" style="1"/>
@@ -261,6 +281,40 @@
             </Container>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JButton" name="pmTimein">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="54" green="33" red="0" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="30" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="PM TIME IN"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pmTimeinActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="pmTimeOut">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="54" green="33" red="0" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="30" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="PM TIME OUT"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pmTimeOutActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

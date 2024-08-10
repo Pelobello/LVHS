@@ -27,6 +27,12 @@ import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
 import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
 import net.sf.jasperreports.view.JasperViewer;
 import org.apache.log4j.Logger;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
 
 
 
@@ -58,7 +64,7 @@ public static ReportManager getInstance() throws IOException{
     }
     public void compileReport()throws JRException,IOException{
        
-        jReport = JasperCompileManager.compileReport(getClass().getResourceAsStream("/AttendanceManagement/print/AttendanceReport.jrxml"));
+        jReport = JasperCompileManager.compileReport(getClass().getResourceAsStream("/AttendanceManagement/print/AttendanceReportV2.jrxml"));
         teachersReport = JasperCompileManager.compileReport(getClass().getResourceAsStream("/AttendanceManagement/print/TeachersReport.jrxml"));
     }
     public void printTeachersReport(ParameterEmployee data)throws JRException{
@@ -101,7 +107,7 @@ public static ReportManager getInstance() throws IOException{
         exporter.setExporterInput(new SimpleExporterInput(print));
         exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputPath));
         SimpleXlsReportConfiguration configuration = new SimpleXlsReportConfiguration();
-        configuration.setOnePagePerSheet(true);
+        configuration.setOnePagePerSheet(false);
         configuration.setRemoveEmptySpaceBetweenRows(true);
         exporter.setConfiguration(configuration);
         

@@ -24,7 +24,24 @@ private ResultSet rs;
 public List<ModelEmployeesData>getallData() throws SQLException{
   
     try {
-        String sql = "SELECT IDnumber, FirstName, CASE WHEN TRIM(MiddleName) = '' THEN 'N-M' ELSE MiddleName END AS MiddleName, LastName, Position, Department, DateAssumed, PlantillaNumber FROM employees_data WHERE DateDeleted IS NULL ORDER BY LastName ASC";
+        String sql = "SELECT \n" +
+"    IDnumber, \n" +
+"    FirstName, \n" +
+"    CASE WHEN TRIM(MiddleName) = '' THEN 'N-M' ELSE MiddleName END AS MiddleName, \n" +
+"    LastName, \n" +
+"    Position, \n" +
+"    Department, \n" +
+"    DateAssumed, \n" +
+"    PlantillaNumber \n" +
+"FROM \n" +
+"    employees_data \n" +
+"WHERE \n" +
+"    DateDeleted IS NULL \n" +
+"ORDER BY \n" +
+"    Department = 'JHS' DESC,\n" +
+"    Department = 'SHS' DESC,\n" +
+"    Department = 'NTP' DESC,\n" +
+"    LastName ASC;";
         ps = prepareStatement(sql);
         rs = ps.executeQuery();
         
@@ -37,7 +54,7 @@ public List<ModelEmployeesData>getallData() throws SQLException{
             String lastName = rs.getString("LastName");
             String position = rs.getString("Position");
             String department = rs.getString("Department");
-            int plantillaNumber = rs.getInt("PlantillaNumber");
+            String plantillaNumber = rs.getString("PlantillaNumber");
             Date dateAssumed = rs.getDate("DateAssumed");
             
             list.add(new ModelEmployeesData(idNumber, firstName, middleName, lastName, position, department, plantillaNumber, dateAssumed));
@@ -79,7 +96,7 @@ public List<ModelEmployeesData>searchlData(String Search) throws SQLException{
             String lastName = rs.getString("LastName");
             String position = rs.getString("Position");
             String department = rs.getString("Department");
-            int plantillaNumber = rs.getInt("PlantillaNumber");
+            String plantillaNumber = rs.getString("PlantillaNumber");
             Date dateAssumed = rs.getDate("DateAssumed");
             
             list.add(new ModelEmployeesData(idNumber, firstName, middleName, lastName, position, department, plantillaNumber, dateAssumed));

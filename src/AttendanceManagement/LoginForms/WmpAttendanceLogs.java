@@ -6,8 +6,10 @@ package AttendanceManagement.LoginForms;
 
 import AttendanceManagement.Controller.AttendanceController;
 import AttendanceManagement.Controller.EmployeesController;
+import AttendanceManagement.Controller.WmpAttendanceController;
 import AttendanceManagement.Model.ModelAttendance;
 import AttendanceManagement.Model.ModelEmployees;
+import AttendanceManagement.Model.WmpModel;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.AlphaComposite;
@@ -44,11 +46,11 @@ import static org.apache.xmlbeans.impl.schema.StscState.start;
  *
  * @author USER
  */
-public class Time_in_out_Form extends javax.swing.JPanel {
+public class WmpAttendanceLogs extends javax.swing.JPanel {
 
      private EmployeesController employeesController = new EmployeesController();
   private AttendanceController attendanceController = new AttendanceController();
-    public Time_in_out_Form() {
+    public WmpAttendanceLogs() {
         initComponents();
        
         setOpaque(false);
@@ -65,21 +67,21 @@ public class Time_in_out_Form extends javax.swing.JPanel {
 private void SearchEmployees(){
      int searchID = Integer.parseInt(SearchField.getText());      
         ModelEmployees employees = employeesController.SearchEmployees(searchID);        
-        if (employees!=null) {    
+        if (employees!=null) {     
             
-            if (employees.getDepartment().equals("WMP I")||employees.getDepartment().equals("WMP II")||employees.getDepartment().equals("WMP III")) {
-               JOptionPane.showMessageDialog(this, "WMP not available in this form. Hold Alt F2 for WMP logs");
+            if (employees.getDepartment().equals("SHS")||employees.getDepartment().equals("JHS")||employees.getDepartment().equals("NTP")) {
+               JOptionPane.showMessageDialog(this, "SHS,JHS,NTP not available in this form. Hold Alt F1 for WMP logs");
                 SearchField.requestFocus();
             }else{
                  String idStr = Integer.toString(employees.getId());
-             FullName.setText(employees.getFirstName().toUpperCase()+" "+employees.getLastName().toUpperCase());
-             employeesID.setText(idStr);
+             nameTxtField.setText(employees.getFirstName().toUpperCase()+" "+employees.getLastName().toUpperCase());
+             idTxtField.setText(idStr);
              EmployeesImage.setImage(employees.getEmployeesImage());
-             DepartMent.setText(employees.getDepartment());
+             departmentTxtField.setText(employees.getDepartment());
             repaint();
-            revalidate();    
+            revalidate(); 
             }
-                   
+                      
         }
 }
 private void srchFieldScn(){
@@ -98,8 +100,8 @@ private void srchFieldScn(){
 }
 private void defaultComponents(){
     SearchField.setText("");
-    FullName.setText("Juan Dela Cruz");
-    employeesID.setText("ID");
+    nameTxtField.setText("Juan Dela Cruz");
+    idTxtField.setText("ID");
     EmployeesImage.setImage(new ImageIcon(getClass().getResource("/AttendanceManagement/Images_Icons/profile.png")));
 }
 public void clock(){
@@ -130,136 +132,46 @@ public void clock(){
         this.image = image;
         repaint();
     }
- private void am_pm_Arrival(){
-       try {
-        if (employeesID.getText().equals("ID")) {
-            JOptionPane.showMessageDialog(null, "Invalid ID");
-        } else {
-            LocalTime currentTime = LocalTime.now();
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
-            String formattedTime = currentTime.format(dtf);
-            int currentHour = currentTime.getHour();
-            int empID = Integer.parseInt(employeesID.getText());
-            Icon employeesImageProfile = EmployeesImage.getImage();
-            String department = DepartMent.getText();
-            String fullName = FullName.getText();
-            
-             LocalTime noonTime = LocalTime.of(12, 30);
-             LocalTime morning = LocalTime.of(12, 00);
-            
-            ModelAttendance attendanceRecord = new ModelAttendance();
-            attendanceRecord.setEmployeesImage(employeesImageProfile);
-            attendanceRecord.setDepartment(department);
-            attendanceRecord.setEmployeesID(empID);
-            attendanceRecord.setEmployeesFullName(fullName);
-            LocalTime formattedLocalTime = LocalTime.parse(formattedTime, dtf);
-          
-            String timeLabel = (currentTime.isBefore(noonTime)) ? "AM Arrival" : "PM Arrival";
-            int confirmation = JOptionPane.showConfirmDialog(null, "Do you agree to record the " + timeLabel + " at " + formattedTime + "?", "Confirm Time In", JOptionPane.YES_NO_OPTION);
-            
-            if (DepartMent.getText().equals("WMP I")||DepartMent.getText().equals("WMP II")||DepartMent.getText().equals("WMP III")) {
-                 if (confirmation == JOptionPane.YES_OPTION) {
-                    if (currentTime.isBefore(morning)) {          
-                    attendanceRecord.setAmTimeIn(formattedLocalTime);
-                    attendanceController.amtimeIn(attendanceRecord);
-                    SearchField.setText("");
-                    SearchField.requestFocus();
-                } else {  
-                    attendanceRecord.setPmTimeIn(formattedLocalTime);
-                    attendanceController.pmtimeIn(attendanceRecord);
-                    SearchField.setText("");
-                    SearchField.requestFocus();
-                } 
-                     
-                 }
-                
-                
-                
-            }else{
-                if (confirmation == JOptionPane.YES_OPTION) {
-                if (currentTime.isBefore(noonTime)) {          
-                    attendanceRecord.setAmTimeIn(formattedLocalTime);
-                    attendanceController.amtimeIn(attendanceRecord);
-                    SearchField.setText("");
-                    SearchField.requestFocus();
-                } else {  
-                    attendanceRecord.setPmTimeIn(formattedLocalTime);
-                    attendanceController.pmtimeIn(attendanceRecord);
-                    SearchField.setText("");
-                    SearchField.requestFocus();
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Time In was not recorded.");
-            } 
-            }
-           
-        }
-          } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(null, "Invalid input for Employee ID. Please enter a valid numeric ID.");
-        e.printStackTrace();
-    
-    
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
- }
+ 
    @Override
     public void addNotify() {
         super.addNotify();
         setupKeyBindings();
     }
 
- private void am_pm_Departure(){
-         try {
-        if (employeesID.getText().equals("ID")) {
-            JOptionPane.showMessageDialog(null, "Invalid ID");
-        } else {
-            LocalTime currentTime = LocalTime.now();
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
-            String formattedTime = currentTime.format(dtf);
-            int currentHour = currentTime.getHour();
-            int empID = Integer.parseInt(employeesID.getText());
-            Icon employeesImageProfile = EmployeesImage.getImage();
-            String department = DepartMent.getText();
-            String fullName = FullName.getText();
-  
-             LocalTime noonTime = LocalTime.of(12, 30);
-            
-            ModelAttendance attendanceRecord = new ModelAttendance();
-            attendanceRecord.setEmployeesImage(employeesImageProfile);
-            attendanceRecord.setDepartment(department);
-            attendanceRecord.setEmployeesID(empID);
-            attendanceRecord.setEmployeesFullName(fullName);
-            LocalTime formattedLocalTime = LocalTime.parse(formattedTime, dtf);
-
-            String timeLabel = (currentTime.isBefore(noonTime)) ? "AM Departure" : "PM Departure";
-            int confirmation = JOptionPane.showConfirmDialog(null, "Do you agree to record the " + timeLabel + " at " + formattedTime + "?", "Confirm Time In", JOptionPane.YES_NO_OPTION);
-
-            if (confirmation == JOptionPane.YES_OPTION) {
-                if (currentTime.isBefore(noonTime)) {          
-                    attendanceRecord.setAmTimeOut(formattedLocalTime);
-                    attendanceController.amtimeOut(attendanceRecord);
-                     SearchField.setText("");
-                     SearchField.setFocusable(true);
-                 SearchField.requestFocus();
-                } else {  
-                    attendanceRecord.setPmTimeOut(formattedLocalTime);
-                    attendanceController.pmtimeOut(attendanceRecord);
-                    SearchField.setText("");
-               SearchField.requestFocus();
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Time In was not recorded.");
-            }
-        }
-           } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(null, "Invalid input for Employee ID. Please enter a valid numeric ID.");
-        e.printStackTrace();
+      private WmpModel createAttendanceModel() {
+    int employeesID = Integer.parseInt(idTxtField.getText());
+    String fullname = nameTxtField.getText();
+    String department = departmentTxtField.getText();
+    LocalTime currentTime = LocalTime.now();
     
-    } catch (Exception e) {
-        e.printStackTrace();
+    // Extract hour and minute
+    int hour = currentTime.getHour();
+    int minute = currentTime.getMinute();
+    
+    // Create a LocalTime object with seconds set to zero
+    LocalTime formattedTime = LocalTime.of(hour, minute, 0);
+    
+    // Optionally, format the time as a string if needed
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+    String formattedTimeString = formattedTime.format(dtf);
+    
+    // Use formattedTime in your WmpModel
+    return new WmpModel(employeesID, fullname, department, formattedTime, formattedTime, formattedTime, formattedTime);
+}
+         private boolean confirmTimeAction(String action) {
+        LocalTime currentTime = LocalTime.now();
+        DateTimeFormatter dtf12Hour = DateTimeFormatter.ofPattern("hh:mm a");
+        String formattedTime = currentTime.format(dtf12Hour);
+
+        int result = JOptionPane.showConfirmDialog(this,
+                "Do you want to record " + action + " at " + formattedTime + "?",
+                "Confirm " + action,
+                JOptionPane.YES_NO_OPTION);
+        
+        return result == JOptionPane.YES_OPTION;
     }
- }
+   
    private void setupKeyBindings() {
         // Get the root pane's input map and action map
         InputMap inputMap = this.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
@@ -278,7 +190,7 @@ public void clock(){
         actionMap.put("timeIn", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                     am_pm_Arrival();
+                  
              
                 
             }
@@ -287,7 +199,7 @@ public void clock(){
         actionMap.put("timeOut", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                am_pm_Departure();
+              
                 
             }
         });
@@ -298,42 +210,44 @@ public void clock(){
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        arrival = new javax.swing.JButton();
-        departure = new javax.swing.JButton();
-        DepartMent = new javax.swing.JLabel();
+        amTimeIn = new javax.swing.JButton();
+        amTimeOut = new javax.swing.JButton();
+        departmentTxtField = new javax.swing.JLabel();
         timeLbl = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         SearchField = new javax.swing.JTextField();
         EmployeesImage = new AttendanceManagement.Components.ImageBox();
-        FullName = new javax.swing.JLabel();
-        employeesID = new javax.swing.JLabel();
+        nameTxtField = new javax.swing.JLabel();
+        idTxtField = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         imageBox1 = new AttendanceManagement.Components.ImageBox();
+        pmTimein = new javax.swing.JButton();
+        pmTimeOut = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setOpaque(false);
 
-        arrival.setBackground(new java.awt.Color(0, 51, 84));
-        arrival.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
-        arrival.setForeground(new java.awt.Color(255, 255, 255));
-        arrival.setText("TIME IN");
-        arrival.addActionListener(new java.awt.event.ActionListener() {
+        amTimeIn.setBackground(new java.awt.Color(0, 51, 84));
+        amTimeIn.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        amTimeIn.setForeground(new java.awt.Color(255, 255, 255));
+        amTimeIn.setText("AM TIME IN");
+        amTimeIn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                arrivalActionPerformed(evt);
+                amTimeInActionPerformed(evt);
             }
         });
 
-        departure.setBackground(new java.awt.Color(0, 51, 84));
-        departure.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
-        departure.setForeground(new java.awt.Color(255, 255, 255));
-        departure.setText("TIME OUT");
-        departure.addActionListener(new java.awt.event.ActionListener() {
+        amTimeOut.setBackground(new java.awt.Color(0, 51, 84));
+        amTimeOut.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        amTimeOut.setForeground(new java.awt.Color(255, 255, 255));
+        amTimeOut.setText("AM TIME OUT");
+        amTimeOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                departureActionPerformed(evt);
+                amTimeOutActionPerformed(evt);
             }
         });
 
-        DepartMent.setText("JHS");
+        departmentTxtField.setText("JHS");
 
         timeLbl.setFont(new java.awt.Font("Segoe UI Emoji", 1, 35)); // NOI18N
         timeLbl.setForeground(new java.awt.Color(255, 255, 255));
@@ -355,14 +269,14 @@ public void clock(){
 
         EmployeesImage.setImage(new javax.swing.ImageIcon(getClass().getResource("/AttendanceManagement/Images_Icons/profile.png"))); // NOI18N
 
-        FullName.setFont(new java.awt.Font("Segoe UI", 1, 45)); // NOI18N
-        FullName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        FullName.setText("Juan Dela Cruz");
+        nameTxtField.setFont(new java.awt.Font("Segoe UI", 1, 45)); // NOI18N
+        nameTxtField.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nameTxtField.setText("Juan Dela Cruz");
 
-        employeesID.setFont(new java.awt.Font("Segoe UI", 1, 45)); // NOI18N
-        employeesID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        employeesID.setText("ID");
-        employeesID.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        idTxtField.setFont(new java.awt.Font("Segoe UI", 1, 45)); // NOI18N
+        idTxtField.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        idTxtField.setText("ID");
+        idTxtField.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -378,11 +292,11 @@ public void clock(){
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(FullName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(nameTxtField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(employeesID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(idTxtField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -391,12 +305,12 @@ public void clock(){
                 .addGap(17, 17, 17)
                 .addComponent(SearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(EmployeesImage, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(EmployeesImage, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(nameTxtField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(FullName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(employeesID, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3))
+                .addComponent(idTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         imageBox1.setImage(new javax.swing.ImageIcon(getClass().getResource("/AttendanceManagement/Images_Icons/LVHS_BANNER-nobackground.png"))); // NOI18N
@@ -417,39 +331,71 @@ public void clock(){
                 .addComponent(imageBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        pmTimein.setBackground(new java.awt.Color(0, 51, 84));
+        pmTimein.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        pmTimein.setForeground(new java.awt.Color(255, 255, 255));
+        pmTimein.setText("PM TIME IN");
+        pmTimein.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pmTimeinActionPerformed(evt);
+            }
+        });
+
+        pmTimeOut.setBackground(new java.awt.Color(0, 51, 84));
+        pmTimeOut.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        pmTimeOut.setForeground(new java.awt.Color(255, 255, 255));
+        pmTimeOut.setText("PM TIME OUT");
+        pmTimeOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pmTimeOutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(676, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(678, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(DepartMent, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(timeLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(arrival, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(departure, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(652, 652, 652))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(departmentTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(1136, 1136, 1136))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(timeLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(amTimeIn, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(amTimeOut, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(pmTimein, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(pmTimeOut, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(642, 642, 642))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(arrival, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(departure, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(amTimeIn, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(amTimeOut, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pmTimein, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pmTimeOut, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(timeLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(timeLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(DepartMent, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(departmentTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -461,7 +407,9 @@ public void clock(){
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -470,13 +418,37 @@ public void clock(){
        this.getRootPane().requestFocusInWindow();
     }//GEN-LAST:event_SearchFieldActionPerformed
    
-    private void arrivalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arrivalActionPerformed
-    am_pm_Arrival();
-    }//GEN-LAST:event_arrivalActionPerformed
+    private void amTimeInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amTimeInActionPerformed
+    if (confirmTimeAction("AM Time In")) {
+            WmpAttendanceController attendanceController = new WmpAttendanceController();
+            WmpModel attendance = createAttendanceModel();
+            attendanceController.amTimeIn(attendance);
+        }
+    }//GEN-LAST:event_amTimeInActionPerformed
 
-    private void departureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_departureActionPerformed
- am_pm_Departure();
-    }//GEN-LAST:event_departureActionPerformed
+    private void amTimeOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amTimeOutActionPerformed
+ if (confirmTimeAction("AM Time In")) {
+            WmpAttendanceController attendanceController = new WmpAttendanceController();
+            WmpModel attendance = createAttendanceModel();
+            attendanceController.amTimeOut(attendance);
+        }
+    }//GEN-LAST:event_amTimeOutActionPerformed
+
+    private void pmTimeinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pmTimeinActionPerformed
+       if (confirmTimeAction("AM Time In")) {
+            WmpAttendanceController attendanceController = new WmpAttendanceController();
+            WmpModel attendance = createAttendanceModel();
+            attendanceController.pmTimeIn(attendance);
+        }
+    }//GEN-LAST:event_pmTimeinActionPerformed
+
+    private void pmTimeOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pmTimeOutActionPerformed
+       if (confirmTimeAction("AM Time In")) {
+            WmpAttendanceController attendanceController = new WmpAttendanceController();
+            WmpModel attendance = createAttendanceModel();
+            attendanceController.pmTimeOut(attendance);
+        }
+    }//GEN-LAST:event_pmTimeOutActionPerformed
 
     @Override
     protected void paintComponent(Graphics grphcs) {
@@ -527,17 +499,19 @@ public void clock(){
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel DepartMent;
     private AttendanceManagement.Components.ImageBox EmployeesImage;
-    private javax.swing.JLabel FullName;
     private javax.swing.JTextField SearchField;
-    private javax.swing.JButton arrival;
-    private javax.swing.JButton departure;
-    private javax.swing.JLabel employeesID;
+    private javax.swing.JButton amTimeIn;
+    private javax.swing.JButton amTimeOut;
+    private javax.swing.JLabel departmentTxtField;
+    private javax.swing.JLabel idTxtField;
     private AttendanceManagement.Components.ImageBox imageBox1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel nameTxtField;
+    private javax.swing.JButton pmTimeOut;
+    private javax.swing.JButton pmTimein;
     private javax.swing.JLabel timeLbl;
     // End of variables declaration//GEN-END:variables
 }

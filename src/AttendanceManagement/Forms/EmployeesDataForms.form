@@ -40,12 +40,12 @@
                   <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="searching" pref="194" max="32767" attributes="0"/>
+                          <Component id="searching" min="-2" pref="194" max="-2" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="date" pref="216" max="32767" attributes="0"/>
-                          <EmptySpace min="-2" pref="693" max="-2" attributes="0"/>
+                          <Component id="date" min="-2" pref="216" max="-2" attributes="0"/>
+                          <EmptySpace pref="699" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane1" pref="1109" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="1115" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>

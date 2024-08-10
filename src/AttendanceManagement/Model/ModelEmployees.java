@@ -8,6 +8,20 @@ import javax.swing.Icon;
 
 public class ModelEmployees {
 
+    /**
+     * @return the plantillaNumber
+     */
+    public String getPlantillaNumber() {
+        return plantillaNumber;
+    }
+
+    /**
+     * @param plantillaNumber the plantillaNumber to set
+     */
+    public void setPlantillaNumber(String plantillaNumber) {
+        this.plantillaNumber = plantillaNumber;
+    }
+
   
     public int getIdData() {
         return idData;
@@ -78,13 +92,7 @@ public class ModelEmployees {
         this.dateAssumed = dateAssumed;
     }
 
-    public int getPlantillaNumber() {
-        return plantillaNumber;
-    }
-
-    public void setPlantillaNumber(int plantillaNumber) {
-        this.plantillaNumber = plantillaNumber;
-    }
+  
 
     public Icon getEmployeesImage() {
         return employeesImage;
@@ -98,7 +106,7 @@ public class ModelEmployees {
         
     }
 
-    public ModelEmployees(int id, String firstName, String middleName, String lastName, String position, String department, Date dateAssumed, int plantillaNumber, Icon employeesImage) {
+    public ModelEmployees(int id, String firstName, String middleName, String lastName, String position, String department, Date dateAssumed, String plantillaNumber, Icon employeesImage) {
         this.id = id;
         this.firstName = firstName;
         this.middleName = middleName;
@@ -109,7 +117,7 @@ public class ModelEmployees {
         this.plantillaNumber = plantillaNumber;
         this.employeesImage = employeesImage;
     }
-    
+
    
     private int idData;
     private int id;
@@ -119,7 +127,7 @@ public class ModelEmployees {
     private String position;
     private String department;
     private Date dateAssumed;
-    private int plantillaNumber;
+    private String plantillaNumber;
     private Icon employeesImage;
 
     

@@ -65,7 +65,7 @@ public class EmployeesController {
                     ps.setString(5, data.getPosition());
                     ps.setString(6, data.getDepartment());
                     ps.setDate(7, java.sql.Date.valueOf(formattedDate));
-                    ps.setInt(8, data.getPlantillaNumber());
+                    ps.setString(8, data.getPlantillaNumber());
                     ps.setString(9, base64Image);
 
                     ps.executeUpdate();
@@ -96,7 +96,7 @@ public class EmployeesController {
                     ps.setString(5, data.getPosition());
                     ps.setString(6, data.getDepartment());
                     ps.setDate(7, java.sql.Date.valueOf(formattedDate));
-                    ps.setInt(8, data.getPlantillaNumber());
+                    ps.setString(8, data.getPlantillaNumber());
                     ps.setString(9, base64Image);
                     ps.setInt(10, data.getIdData());
 
@@ -200,7 +200,7 @@ public class EmployeesController {
                         rs.getInt("IDnumber"), rs.getString("FirstName"),
                         rs.getString("MiddleName"), rs.getString("LastName"),
                         rs.getString("Position"), rs.getString("Department"),
-                        rs.getDate("DateAssumed"), rs.getInt("PlantillaNumber"), imageIcon);
+                        rs.getDate("DateAssumed"), rs.getString("PlantillaNumber"), imageIcon);
                 employeesProfile.setIdData(rs.getInt("ID"));
                 return employeesProfile;
             } else {
@@ -213,7 +213,7 @@ public class EmployeesController {
     }
 
     public void populateEmployeesProfile() {
-        String sql = "SELECT * FROM employees_data WHERE DateDeleted IS NULL";
+        String sql = "SELECT * FROM employees_data WHERE DateDeleted IS NULL ORDER BY Department = 'JHS' DESC,Department = 'SHS' DESC,Department = 'NTP' DESC,LastName ASC";
         try (PreparedStatement ps = getConnection().prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
@@ -228,7 +228,7 @@ public class EmployeesController {
                         rs.getInt("IDnumber"), rs.getString("FirstName"),
                         rs.getString("MiddleName"), rs.getString("LastName"),
                         rs.getString("Position"), rs.getString("Department"),
-                        rs.getDate("DateAssumed"), rs.getInt("PlantillaNumber"), imageIcon);
+                        rs.getDate("DateAssumed"), rs.getString("PlantillaNumber"), imageIcon);
                 employeesProfile.setIdData(rs.getInt("ID"));
                 employeesProfileForms.addEmployees(employeesProfile);
             }
@@ -253,12 +253,12 @@ public class EmployeesController {
 
                 BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imageData));
                 ImageIcon imageIcon = new ImageIcon(bufferedImage);
-
+                
                 ModelEmployees employeesProfile = new ModelEmployees(
                         rs.getInt("IDnumber"), rs.getString("FirstName"),
                         rs.getString("MiddleName"), rs.getString("LastName"),
                         rs.getString("Position"), rs.getString("Department"),
-                        rs.getDate("DateAssumed"), rs.getInt("PlantillaNumber"), imageIcon);
+                        rs.getDate("DateAssumed"), rs.getString("PlantillaNumber"), imageIcon);
                 employeesProfile.setIdData(rs.getInt("ID"));
                 employeesProfileForms.addEmployees(employeesProfile);
             }
@@ -295,7 +295,7 @@ private BufferedImage convertImageIconToBufferedImage(ImageIcon imageIcon) {
     int originalHeight = image.getHeight(null);
 
     // Set new dimensions, maintaining the aspect ratio
-    int newWidth = 250;
+    int newWidth = 500;
     int newHeight = (newWidth * originalHeight) / originalWidth;
 
     // Create a buffered image with the new dimensions

@@ -1,0 +1,787 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="testReport" language="groovy" pageWidth="612" pageHeight="1008" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fc7d5428-87ac-46de-beef-6e1c3573c550">
+	<property name="ireport.zoom" value="1.610510000000009"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Name" class="java.lang.String"/>
+	<parameter name="Month" class="java.lang.String"/>
+	<parameter name="Year" class="java.lang.String"/>
+	<parameter name="Principal" class="java.lang.String"/>
+	<field name="day" class="java.lang.String"/>
+	<field name="amArrival" class="java.lang.String"/>
+	<field name="amDeparture" class="java.lang.String"/>
+	<field name="pmArrival" class="java.lang.String"/>
+	<field name="pmDeparture" class="java.lang.String"/>
+	<field name="workhours" class="java.lang.String"/>
+	<field name="undertime" class="java.lang.String"/>
+	<field name="overtime" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="128" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="122" height="20" forecolor="#333333" uuid="ed8cf987-5527-4bd7-884b-5ffd9b56e03e"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[Civil Service Form No. 48]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="68" y="20" width="172" height="21" forecolor="#333333" uuid="404107ce-3ba4-4973-867f-e4a3cd0676c9"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[DAILY TIME RECORD]]></text>
+			</staticText>
+			<line>
+				<reportElement x="55" y="61" width="198" height="1" uuid="1f725815-0767-4efc-960d-1bd63d75acf8"/>
+			</line>
+			<staticText>
+				<reportElement x="104" y="63" width="104" height="19" forecolor="#333333" uuid="50c29ac6-7044-4fbe-9b10-e5e712a20012"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[(Name)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="83" width="74" height="20" forecolor="#333333" uuid="ed68ec60-8f3f-435a-bf90-7116a6382706"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[For the month of]]></text>
+			</staticText>
+			<line>
+				<reportElement x="104" y="101" width="169" height="1" uuid="5ba64325-4ebb-4ee9-98bb-6e85935f7ff3"/>
+			</line>
+			<staticText>
+				<reportElement x="22" y="103" width="82" height="23" forecolor="#333333" uuid="a9ef00da-fb3f-4133-b736-10ae9860ac59"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[Offical hours for arrival and departure]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="415" y="97" width="70" height="29" forecolor="#333333" uuid="8fc91bed-bf4c-4d72-b384-ad11ce434709"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[Regular days saturdays]]></text>
+			</staticText>
+			<line>
+				<reportElement x="192" y="125" width="81" height="1" uuid="88749565-ed5b-48b8-91bf-37bb334b18ba"/>
+			</line>
+			<line>
+				<reportElement x="192" y="113" width="81" height="1" uuid="e6e8d7af-cd3f-467d-96c0-f6b45a86221b"/>
+			</line>
+			<textField>
+				<reportElement x="104" y="82" width="88" height="20" uuid="c901c01e-5ee6-45df-890a-429fbbdde44c"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Month}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="192" y="82" width="82" height="20" uuid="c3f20b52-5ad4-431c-882e-95fa18489a8b"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Year}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="79" y="41" width="154" height="20" uuid="0a06bb91-f721-4739-b56f-9831a1f7759b"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="311" y="98" width="86" height="28" forecolor="#333333" uuid="8bd7f593-c644-44b9-b564-69ee67b73e10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[Offical hours for arrival and departure]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="397" y="60" width="104" height="19" forecolor="#333333" uuid="03918d1b-37ca-4796-b45d-617e774a08dd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[(Name)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="485" y="124" width="81" height="1" uuid="c4f3e2ee-44c9-4460-b1b3-2869c2dea307"/>
+			</line>
+			<line>
+				<reportElement x="485" y="112" width="81" height="1" uuid="55b9ff2c-546a-4cea-a953-65b581d0e8e7"/>
+			</line>
+			<textField>
+				<reportElement x="372" y="41" width="154" height="20" uuid="24caf71b-65c8-4816-ace9-fdf476753e5c"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="476" y="79" width="82" height="20" uuid="41ea9d52-e317-4ecc-bfa0-72fa010f368c"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Year}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="348" y="60" width="198" height="1" uuid="5e6ddcff-9d7d-479b-85c7-bbc4601278d3"/>
+			</line>
+			<staticText>
+				<reportElement x="293" y="0" width="122" height="20" forecolor="#333333" uuid="a80f9726-45aa-4641-95da-49b0b14fb8d6"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[Civil Service Form No. 48]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="122" y="103" width="70" height="23" forecolor="#333333" uuid="c37d5bc1-c48d-4267-be90-2d29cc42bf12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[Regular days saturdays]]></text>
+			</staticText>
+			<line>
+				<reportElement x="389" y="98" width="169" height="1" uuid="cedd84c1-8d31-4d93-9388-2ea497691294"/>
+			</line>
+			<textField>
+				<reportElement x="389" y="79" width="87" height="20" uuid="d079f7d9-7187-4822-850a-3eccdc03f04f"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Month}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="354" y="20" width="172" height="21" forecolor="#333333" uuid="4de150da-6249-4119-81c5-ee26232c277c"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[DAILY TIME RECORD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="311" y="79" width="74" height="20" forecolor="#333333" uuid="1b8a79eb-4032-4ad4-9aa4-a590b9715272"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[For the month of]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="68" y="31" width="172" height="29" forecolor="#333333" uuid="4b158e33-e1c1-4dec-ad89-0042e65bb547"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[..........o0o...........]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="354" y="31" width="172" height="39" forecolor="#333333" uuid="ae1adbdc-0f05-4ce1-8e85-958b15883902"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[..........o0o...........]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement x="22" y="20" width="33" height="16" uuid="0ba022e3-4277-44d8-ad9a-b62f9316115a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Arrival]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="55" y="20" width="37" height="16" uuid="7ee221bb-3b27-4cb9-a38e-5c4a3e158e33"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Departure]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="92" y="20" width="34" height="16" uuid="44798428-9744-496e-9a4b-84789c897896"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Arrival]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="126" y="20" width="33" height="16" uuid="45de1e12-cf44-4730-b295-540cf1dd6329"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Departure]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="159" y="0" width="40" height="36" uuid="6ba7569d-08b0-40a2-b67b-9532b41f2e1c"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Workhours]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="0" width="41" height="36" uuid="6a139047-2a93-4452-b533-45cd5c886619"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Undertime]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="0" width="40" height="36" uuid="c24e51e2-5e4f-4862-9a34-0b276d1d1950"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Overtime]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="0" width="70" height="20" uuid="f5836201-e655-4ed4-914b-cf6521c00f25"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[A.M.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="92" y="0" width="67" height="20" uuid="f8ec4ce5-9749-42bf-bf56-1642a8232f89"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[P.M.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="492" y="0" width="41" height="36" uuid="b0bab92c-2acc-4058-a935-978977579868"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Undertime]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="315" y="20" width="33" height="16" uuid="dc90a81c-6439-4f75-a4f1-36830a254fcd"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Arrival]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="452" y="0" width="40" height="36" uuid="80d5197b-e951-4a50-8810-0debe2e7b0f7"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Workhours]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="385" y="20" width="34" height="16" uuid="cd638aad-2d3c-4ced-82eb-b4e4031609cf"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Arrival]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="385" y="0" width="67" height="20" uuid="4c9b6a37-1d09-4d91-ba8f-59df85ff3124"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[P.M.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="419" y="20" width="33" height="16" uuid="678162b7-557e-4241-8031-2bfd0ce5ede8"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Departure]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="348" y="20" width="37" height="16" uuid="b6c2d06b-5e5e-4730-aaf3-cb4cf891b991"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Departure]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="293" y="0" width="22" height="36" uuid="119329f9-99ef-491f-9dd5-7be0d0ec5fca"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Day]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="315" y="0" width="70" height="20" uuid="b7548020-0540-44b3-b181-13b6504d0cc2"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[A.M.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="533" y="0" width="39" height="36" uuid="f401fa04-0013-4eda-b58e-5bfc5d46d164"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Overtime]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="22" height="36" uuid="651ad7b9-d7f7-4fbc-b30d-530c08d2c3b7"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Day]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="22" height="20" uuid="a06d8e74-cb99-4c8a-9643-f808e7d0658f"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{day}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="22" y="0" width="33" height="20" uuid="d319b9aa-7cbf-495c-8ca4-4e3d3fd091ee"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amArrival}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="55" y="0" width="37" height="20" uuid="444f982c-2611-457a-a8e6-36b4c1cb4767"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amDeparture}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="92" y="0" width="34" height="20" uuid="d8e23137-bb70-405c-ab60-59f515f07e22"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pmArrival}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="126" y="0" width="33" height="20" uuid="d97ed4ff-0f94-4e58-83db-524e3d73194e"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pmDeparture}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="159" y="0" width="40" height="20" uuid="68bf6a39-3681-4861-9e7c-578040733300"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{workhours}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="199" y="0" width="41" height="20" uuid="7024a659-145d-4a6e-bfb5-af167bdf69cb"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{undertime}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="0" width="40" height="20" uuid="3bbacd16-9098-41da-90f5-ec14650cc209"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{overtime}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="293" y="0" width="22" height="20" uuid="c96471ef-580d-40a9-8a3b-c8dbcca6d590"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{day}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="315" y="0" width="33" height="20" uuid="e2c1676c-3c71-4c7a-9269-f86bd12fc0d8"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amArrival}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="348" y="0" width="37" height="20" uuid="fc828494-22c4-48e4-9dca-e9809b0206ec"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amDeparture}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="385" y="0" width="34" height="20" uuid="3b020970-3a1a-4393-81fd-2f83a43f5e42"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pmArrival}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="419" y="0" width="33" height="20" uuid="5f4c5e72-8ea8-44a6-9b75-b149c70c228c"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pmDeparture}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="452" y="0" width="40" height="20" uuid="e7e2fca3-2d88-49cc-b987-5e7caa21abe8"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{workhours}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="492" y="0" width="41" height="20" uuid="6dc9ecef-5152-4e25-a83f-a5160a4e5fee"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{undertime}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="533" y="0" width="39" height="20" uuid="41854711-45e3-4dd5-a4a3-ceb960a409dc"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{overtime}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="140">
+			<staticText>
+				<reportElement x="11" y="11" width="262" height="49" forecolor="#333333" uuid="25388809-3ae2-4150-a246-46e68f3a1003"/>
+				<textElement markup="none">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[I certify on my honor that the above is a true and correct report of the hours of work performed, record of which was made daily at the time of arrival and departure from office.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="60" width="280" height="1" uuid="5b75c83a-83e3-421f-bc91-a2a1c329ccb8"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="61" width="280" height="20" forecolor="#333333" uuid="97ce006c-0665-42f9-b79e-a0888db71018"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[(Signature)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="79" width="243" height="20" forecolor="#333333" uuid="cf241608-c0c3-479d-8f67-11592ce8f078"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[VERIFIED as to the prescribed office hours]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="119" width="280" height="2" uuid="732fc702-c2eb-48b4-a83b-68c31d866f82"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="119" width="280" height="20" forecolor="#333333" uuid="1a5850f1-c79c-4431-aa2a-05a4ccbdc4f3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[(Principal |||)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="100" width="280" height="20" uuid="397b464c-ffc7-4386-b766-9b759498807c"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Principal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="293" y="119" width="279" height="20" forecolor="#333333" uuid="b9fecb6d-641f-439e-803f-c4180b07a07b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[(Principal |||)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="293" y="61" width="278" height="20" forecolor="#333333" uuid="0848fbbf-9916-4497-8c6e-f7d3be060391"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[(Signature)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="299" y="11" width="267" height="49" forecolor="#333333" uuid="7b711dd6-28ba-4c0f-84f2-7718ae32ae64"/>
+				<textElement markup="none">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[I certify on my honor that the above is a true and correct report of the hours of work performed, record of which was made daily at the time of arrival and departure from office.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="293" y="120" width="278" height="1" uuid="4e6ee633-68ff-466a-b131-89b6a6302a63"/>
+			</line>
+			<textField>
+				<reportElement x="293" y="100" width="278" height="20" uuid="a01c6696-ed0e-4a3c-af85-7dac97316eb6"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Principal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="328" y="79" width="243" height="20" forecolor="#333333" uuid="3bbca2a4-d1c4-45cf-987e-bc568574c83a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[VERIFIED as to the prescribed office hours]]></text>
+			</staticText>
+			<line>
+				<reportElement x="293" y="60" width="278" height="1" uuid="78d07cdd-6c82-43d9-b80c-b0ed92d389d1"/>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>

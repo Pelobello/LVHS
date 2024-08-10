@@ -45,19 +45,18 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="Month" min="-2" pref="216" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="Year" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="SearchField" min="-2" pref="216" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="Principal" min="-2" pref="214" max="-2" attributes="0"/>
-                              </Group>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="SearchField" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
+                              <Component id="Month" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="201" max="32767" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="Principal" pref="214" max="32767" attributes="0"/>
+                              <Component id="Year" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jButton1" min="-2" pref="52" max="-2" attributes="0"/>
+                          <EmptySpace pref="131" max="32767" attributes="0"/>
                           <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jScrollPane1" max="32767" attributes="0"/>
@@ -81,6 +80,7 @@
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jButton1" pref="51" max="32767" attributes="0"/>
                               <Component id="Principal" pref="51" max="32767" attributes="0"/>
                               <Component id="SearchField" max="32767" attributes="0"/>
                           </Group>
@@ -96,9 +96,9 @@
                   <Component id="jScrollPane1" pref="460" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="view" max="32767" attributes="0"/>
-                      <Component id="excel" alignment="0" max="32767" attributes="0"/>
-                      <Component id="pdf" alignment="0" max="32767" attributes="0"/>
+                      <Component id="view" min="-2" max="-2" attributes="0"/>
+                      <Component id="excel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="pdf" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -375,6 +375,17 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="excelActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton1">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/AttendanceManagement/Images_Icons/icons8_search_35px.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Search"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

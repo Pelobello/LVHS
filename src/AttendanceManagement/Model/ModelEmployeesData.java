@@ -13,16 +13,18 @@ public class ModelEmployeesData {
     /**
      * @return the plantillaNumber
      */
-    public int getPlantillaNumber() {
+    public String getPlantillaNumber() {
         return plantillaNumber;
     }
 
     /**
      * @param plantillaNumber the plantillaNumber to set
      */
-    public void setPlantillaNumber(int plantillaNumber) {
+    public void setPlantillaNumber(String plantillaNumber) {
         this.plantillaNumber = plantillaNumber;
     }
+
+   
 
     /**
      * @return the idNumber
@@ -125,7 +127,7 @@ public class ModelEmployeesData {
     public ModelEmployeesData() {
     }
 
-    public ModelEmployeesData(int idNumber, String firstName, String middleName, String lastName, String position, String department, int plantillaNumber, Date dateAssumed) {
+    public ModelEmployeesData(int idNumber, String firstName, String middleName, String lastName, String position, String department, String plantillaNumber, Date dateAssumed) {
         this.idNumber = idNumber;
         this.firstName = firstName;
         this.middleName = middleName;
@@ -144,12 +146,13 @@ private String middleName;
 private String lastName;
 private String position;
 private String department;
-private int plantillaNumber;
+private String plantillaNumber;
 private Date dateAssumed;
 
 public Object[]tableRow(int row){
     DateFormat df = new SimpleDateFormat("MMMM dd,yyyy");
-    return new Object[]{idNumber,lastName,firstName,middleName,position,department,plantillaNumber,dateAssumed == null ?"":df.format(dateAssumed)};
+    
+    return new Object[]{idNumber,lastName,firstName,middleName,position,department, getPlantillaNumber(),dateAssumed == null ?"":df.format(dateAssumed)};
 }
 
 }

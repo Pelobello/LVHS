@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package AttendanceManagement.Controller;
 
 import AttendanceManagement.JDBC.DatabaseConnection;
@@ -296,7 +293,7 @@ public void amtimeIn(ModelAttendance data) {
         String base64Image = encodeImageToBase64(bufferedImage);
 
         if (existingEmployee(data)) {
-            JOptionPane.showMessageDialog(null, "Already Time in!");
+            JOptionPane.showMessageDialog(null, "Already timed in!");
         } else {
             ps.setString(1, base64Image);
             ps.setString(2, data.getDepartment());
@@ -310,7 +307,7 @@ public void amtimeIn(ModelAttendance data) {
             ps.setTime(5, sqlTime);
 
             ps.executeUpdate(); // Execute the update
-            JOptionPane.showMessageDialog(null, "Success");
+            JOptionPane.showMessageDialog(null, "Time in successful");
         }
     } catch (Exception e) {
         e.printStackTrace();
@@ -323,14 +320,14 @@ public void amtimeOut(ModelAttendance data) {
                 LocalTime localDateTime = data.getAmTimeOut();
                 java.sql.Time sqlTimestamp = java.sql.Time.valueOf(localDateTime);
 
-                String sql = "UPDATE attendance_data SET AmTimeOut = ? WHERE EmployeesID = ? AND DATE(AmTimeIn) = CURDATE() AND AmTimeOut IS NULL";
+                String sql = "UPDATE attendance_data SET AmTimeOut = ? WHERE EmployeesID = ? AND DATE(DateCreated) = CURDATE() AND AmTimeOut IS NULL";
                 ps = prepareStatement(sql);
                 ps.setTime(1, sqlTimestamp);
                 ps.setInt(2, data.getEmployeesID());
 
                 int rowsUpdated = ps.executeUpdate(); // Execute the update
                 if (rowsUpdated > 0) {
-                    JOptionPane.showMessageDialog(null, "Success");
+                    JOptionPane.showMessageDialog(null, "Time out successful");
                 } else {
                     JOptionPane.showMessageDialog(null, "No matching record found to update");
                 }
@@ -355,7 +352,7 @@ public void pmtimeIn(ModelAttendance data) {
  
         
         if (existingPmTimeIn(data)) {
-            JOptionPane.showMessageDialog(null, "already time in");
+            JOptionPane.showMessageDialog(null, "Already timed in");
             return;
         }
         if (!existingAmTimeIn(data)) {
@@ -370,7 +367,7 @@ public void pmtimeIn(ModelAttendance data) {
 
             int rowsInserted = ps.executeUpdate(); // Execute the insert
             if (rowsInserted > 0) {
-                JOptionPane.showMessageDialog(null, "Time in Success");
+                JOptionPane.showMessageDialog(null, "Time in successful");
             } else {
                 JOptionPane.showMessageDialog(null, "Insert failed");
             }
@@ -386,7 +383,7 @@ public void pmtimeIn(ModelAttendance data) {
 
             int rowsUpdated = ps.executeUpdate(); // Execute the update
             if (rowsUpdated > 0) {
-                JOptionPane.showMessageDialog(null, "Update Success");
+                JOptionPane.showMessageDialog(null, "Update successful");
             } else {
                 JOptionPane.showMessageDialog(null, "No matching record found to update");
             }
@@ -401,7 +398,7 @@ public void pmtimeIn(ModelAttendance data) {
 
             int rowsInserted = ps.executeUpdate(); // Execute the insert
             if (rowsInserted > 0) {
-                JOptionPane.showMessageDialog(null, "Time in Success");
+                JOptionPane.showMessageDialog(null, "Time in Successful");
             } else {
                 JOptionPane.showMessageDialog(null, "Insert failed");
             }
@@ -451,7 +448,7 @@ public void pmtimeOut(ModelAttendance data) {
 
                 int rowsUpdated = ps.executeUpdate(); // Execute the update
                 if (rowsUpdated > 0) {
-                    JOptionPane.showMessageDialog(null, "Success");
+                    JOptionPane.showMessageDialog(null, "Time out successful");
                 } else {
                     JOptionPane.showMessageDialog(null, "No matching record found to update");
                 }
@@ -459,7 +456,7 @@ public void pmtimeOut(ModelAttendance data) {
                 JOptionPane.showMessageDialog(null, "Already timed out");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "You do not have PM time in");
+            JOptionPane.showMessageDialog(null, "No PM time in has been recorded");
         }
     } catch (Exception e) {
         e.printStackTrace();

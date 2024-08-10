@@ -91,7 +91,7 @@ public void populateDtr(JTable table, ModelDtr data) {
 "                    GREATEST(\n" +
 "                        CASE ad.DepartMent\n" +
 "                            WHEN 'SHS' THEN TIMEDIFF('16:30:00', TIME(ad.PmTimeOut))\n" +
-"                            WHEN 'JHS' THEN TIMEDIFF('17:00:00', TIME(ad.PmTimeOut))\n" +
+"                            WHEN 'JHS' THEN TIMEDIFF('16:45:00', TIME(ad.PmTimeOut))\n" +
 "                            WHEN 'NTP' THEN TIMEDIFF('17:00:00', TIME(ad.PmTimeOut))\n" +
 "                            ELSE '00:00:00'\n" +
 "                        END,\n" +
@@ -114,7 +114,7 @@ public void populateDtr(JTable table, ModelDtr data) {
 "                        END\n" +
 "                    WHEN 'JHS' THEN\n" +
 "                        CASE\n" +
-"                            WHEN TIME(ad.PmTimeOut) > '17:00:00' THEN TIMEDIFF(TIME(ad.PmTimeOut), '17:00:00')\n" +
+"                            WHEN TIME(ad.PmTimeOut) > '16:45:00' THEN TIMEDIFF(TIME(ad.PmTimeOut), '16:45:00')\n" +
 "                            ELSE '00:00:00'\n" +
 "                        END\n" +
 "                    WHEN 'NTP' THEN\n" +
@@ -179,7 +179,7 @@ public void populateDtr(JTable table, ModelDtr data) {
 "                TIME_TO_SEC(GREATEST(\n" +
 "                    CASE ad.DepartMent\n" +
 "                        WHEN 'SHS' THEN TIMEDIFF('16:30:00', TIME(ad.PmTimeOut))\n" +
-"                        WHEN 'JHS' THEN TIMEDIFF('17:00:00', TIME(ad.PmTimeOut))\n" +
+"                        WHEN 'JHS' THEN TIMEDIFF('16:45:00', TIME(ad.PmTimeOut))\n" +
 "                        WHEN 'NTP' THEN TIMEDIFF('17:00:00', TIME(ad.PmTimeOut))\n" +
 "                        ELSE '00:00:00'\n" +
 "                    END,\n" +
@@ -205,7 +205,7 @@ public void populateDtr(JTable table, ModelDtr data) {
 "                TIME_TO_SEC(GREATEST(\n" +
 "                    CASE ad.DepartMent\n" +
 "                        WHEN 'SHS' THEN TIMEDIFF('16:30:00', TIME(ad.PmTimeOut))\n" +
-"                        WHEN 'JHS' THEN TIMEDIFF('17:00:00', TIME(ad.PmTimeOut))\n" +
+"                        WHEN 'JHS' THEN TIMEDIFF('16:45:00', TIME(ad.PmTimeOut))\n" +
 "                        WHEN 'NTP' THEN TIMEDIFF('17:00:00', TIME(ad.PmTimeOut))\n" +
 "                        ELSE '00:00:00'\n" +
 "                    END,\n" +
@@ -227,7 +227,7 @@ public void populateDtr(JTable table, ModelDtr data) {
 "                            END\n" +
 "                        WHEN 'JHS' THEN\n" +
 "                            CASE\n" +
-"                                WHEN TIME(ad.PmTimeOut) > '17:00:00' THEN TIMEDIFF(TIME(ad.PmTimeOut), '17:00:00')\n" +
+"                                WHEN TIME(ad.PmTimeOut) > '16:45:00' THEN TIMEDIFF(TIME(ad.PmTimeOut), '16:45:00')\n" +
 "                                ELSE '00:00:00'\n" +
 "                            END\n" +
 "                        WHEN 'NTP' THEN\n" +
@@ -254,7 +254,7 @@ public void populateDtr(JTable table, ModelDtr data) {
 "                                END\n" +
 "                            WHEN 'JHS' THEN\n" +
 "                                CASE\n" +
-"                                    WHEN TIME(ad.PmTimeOut) > '17:00:00' THEN TIMEDIFF(TIME(ad.PmTimeOut), '17:00:00')\n" +
+"                                    WHEN TIME(ad.PmTimeOut) > '16:45:00' THEN TIMEDIFF(TIME(ad.PmTimeOut), '16:45:00')\n" +
 "                                    ELSE '00:00:00'\n" +
 "                                END\n" +
 "                            WHEN 'NTP' THEN\n" +

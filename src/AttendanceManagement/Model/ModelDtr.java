@@ -5,6 +5,20 @@ package AttendanceManagement.Model;
 public class ModelDtr {
 
     /**
+     * @return the months
+     */
+    public int getMonths() {
+        return months;
+    }
+
+    /**
+     * @param months the months to set
+     */
+    public void setMonths(int months) {
+        this.months = months;
+    }
+
+    /**
      * @return the employeesId
      */
     public int getEmployeesId() {
@@ -59,5 +73,6 @@ public class ModelDtr {
     
     private int employeesId;
     private String month;
+    private int months;
     private int year;
 }

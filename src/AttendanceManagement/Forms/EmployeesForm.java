@@ -44,6 +44,7 @@ public class EmployeesForm extends javax.swing.JPanel {
         dc.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
         dc.setTextField(dateAssumed);
         id.setVisible(false);
+        employeeIDlbl.setVisible(false);
     }
    
     private boolean Confirmation(){
@@ -56,14 +57,13 @@ public class EmployeesForm extends javax.swing.JPanel {
         firstName.setText("");
         middleName.setText("");
         FamilyName.setText("");
-        position.setText("");
         plantillaItem.setText("");
           Icon profileImage = new ImageIcon(getClass().getResource("/AttendanceManagement/Images_Icons/profile.png"));
         employeesImage.setImage(profileImage);
     }
    private boolean TxtFieldData() {
     if (employeeID.getText().isEmpty() || firstName.getText().isEmpty() || FamilyName.getText().isEmpty() ||
-        position.getText().isEmpty()|| dateAssumed.getText().isEmpty() || 
+       dateAssumed.getText().isEmpty() || 
         plantillaItem.getText().isEmpty()) {
         JOptionPane.showMessageDialog(this, "*Please fill in all fields marked with !");
         return false;
@@ -71,15 +71,15 @@ public class EmployeesForm extends javax.swing.JPanel {
         return true;
     }
 }
-      private  ModelEmployees employeesData() throws ParseException{
+      private  ModelEmployees employeesData() throws ParseException {
          int employeeId = Integer.parseInt(employeeID.getText());
-                int plantillaNumber = Integer.parseInt(plantillaItem.getText());
+              
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 java.util.Date dateData = dateFormat.parse(dateAssumed.getText());
                 java.sql.Date sqlDate = new java.sql.Date(dateData.getTime());
                 int sqlId = Integer.parseInt(id.getText());
                 // Add employee
-                ModelEmployees UpdateEmployees = new ModelEmployees(employeeId, firstName.getText(), middleName.getText(),FamilyName.getText(), position.getText(), (String) department.getSelectedItem(),sqlDate,plantillaNumber,
+                ModelEmployees UpdateEmployees = new ModelEmployees(employeeId, firstName.getText(), middleName.getText(),FamilyName.getText(), (String)position.getSelectedItem(), (String) department.getSelectedItem(),sqlDate,plantillaItem.getText(),
                     employeesImage.getImage());
                 UpdateEmployees.setIdData(sqlId);
            
@@ -155,7 +155,6 @@ public class EmployeesForm extends javax.swing.JPanel {
         employeeID = new AttendanceManagement.Components.TextField();
         firstName = new AttendanceManagement.Components.TextField();
         middleName = new AttendanceManagement.Components.TextField();
-        position = new AttendanceManagement.Components.TextField();
         FamilyName = new AttendanceManagement.Components.TextField();
         dateAssumed = new AttendanceManagement.Components.TextField();
         plantillaItem = new AttendanceManagement.Components.TextField();
@@ -166,6 +165,7 @@ public class EmployeesForm extends javax.swing.JPanel {
         id = new javax.swing.JLabel();
         department = new javax.swing.JComboBox<>();
         employeeIDlbl = new javax.swing.JLabel();
+        position = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setOpaque(false);
@@ -245,10 +245,6 @@ public class EmployeesForm extends javax.swing.JPanel {
         middleName.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
         middleName.setLabelText("Middle Name");
 
-        position.setForeground(new java.awt.Color(102, 102, 102));
-        position.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
-        position.setLabelText("Position/Designation*");
-
         FamilyName.setForeground(new java.awt.Color(102, 102, 102));
         FamilyName.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
         FamilyName.setLabelText("Family Name*");
@@ -314,15 +310,18 @@ public class EmployeesForm extends javax.swing.JPanel {
                     .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
         id.setText("0");
 
         department.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
-        department.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "JHS", "SHS", "NTP" }));
+        department.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "JHS", "SHS", "NTP", "WMP I", "WMP II", "WMP III" }));
 
         employeeIDlbl.setText("0");
+
+        position.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
+        position.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin. Aide I", "Admin. Aide II", "Admin. Aide IV", "Admin. Aide VI", "Admin. Asst. II", "Admin. Officer I", "Admin. Officer II", "Admin. Officer IV", "Nurse II", "Sec.Guard I", "Watchman I", "Job Order", "Registrar I", "Librarian I", "G. Counselor I", "Accountant I", "Principal I", "Principal II", "Principal III", "Principal IV", "Head Teacher I", "Head Teacher II", "Head Teacher III", "Head Teacher IV", "Master Teacher  I", "Master Teacher II", "Master Teacher III", "Master Teacher IV", "Teacher-I", "Teacher-II", "Teacher-III", "Teacher I - Substitute", "Teacher II - Substitute", "SPED Teacher I", "SPED Teacher II" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -341,11 +340,11 @@ public class EmployeesForm extends javax.swing.JPanel {
                     .addComponent(employeeIDlbl, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(position, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
                     .addComponent(dateAssumed, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
                     .addComponent(plantillaItem, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(department, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(department, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(position, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -354,9 +353,9 @@ public class EmployeesForm extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(37, 37, 37)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(employeeID, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(position, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(position, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(12, 12, 12)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(firstName, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -373,15 +372,16 @@ public class EmployeesForm extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
                         .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(employeeIDlbl, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(employeeIDlbl, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -392,7 +392,7 @@ public class EmployeesForm extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -401,14 +401,13 @@ public class EmployeesForm extends javax.swing.JPanel {
         try {
             AddEmployees();
 //            textFieldtoNone();
-            } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Invalid EmployeesID or Plantilla Item. Please enter a valid number.");
-        
-        } catch (IOException ex) {
+            }  catch (IOException ex) {
             Logger.getLogger(EmployeesForm.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
             Logger.getLogger(EmployeesForm.class.getName()).log(Level.SEVERE, null, ex);
-        }   
+        } catch(NumberFormatException nfe){
+             JOptionPane.showMessageDialog(this, "Invalid EmployeesID. Please enter a valid number.");
+        } 
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
@@ -419,13 +418,13 @@ public class EmployeesForm extends javax.swing.JPanel {
         try {
             UpdateEmployees();
             } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Invalid EmployeesID or Plantilla Item. Please enter a valid number.");
+            JOptionPane.showMessageDialog(this, "Invalid EmployeesID . Please enter a valid number.");
         
         } catch (IOException ex) {
             Logger.getLogger(EmployeesForm.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
             Logger.getLogger(EmployeesForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
     }//GEN-LAST:event_updateBtnActionPerformed
 
     private void browseImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_browseImageMouseClicked
@@ -463,7 +462,7 @@ public class EmployeesForm extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     public AttendanceManagement.Components.TextField middleName;
     public AttendanceManagement.Components.TextField plantillaItem;
-    public AttendanceManagement.Components.TextField position;
+    public javax.swing.JComboBox<String> position;
     public javax.swing.JButton updateBtn;
     // End of variables declaration//GEN-END:variables
 }

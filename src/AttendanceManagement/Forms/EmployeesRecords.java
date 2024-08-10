@@ -111,7 +111,7 @@ private void init() {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Employee ID", "Last Name", "Name", "Middle Name", "Position", "Department", "Plantilla #", "DateAssumed"
+                "Employee's ID", "Last Name", "Name", "Middle Name", "Position", "Department", "Plantilla #", "Date Assumed"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -291,6 +291,7 @@ private String getFormattedFilePath(File file, String extension) {
 private File showFileChooser() {
     JFileChooser fileChooser = new JFileChooser();
     fileChooser.setDialogTitle("Save Report");
+    fileChooser.setAcceptAllFileFilterUsed(false);
     FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel/PDF files", "xls", "pdf");
     fileChooser.setFileFilter(filter);
     int result = fileChooser.showSaveDialog(this);

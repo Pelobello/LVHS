@@ -31,6 +31,7 @@ public class LoginForm extends javax.swing.JPanel {
     private DaoController daoController = new DaoController();
     public LoginForm(Attendance attendance) {
         initComponents();
+               
         this.attendance = attendance;
         setOpaque(false);
        setImage(new ImageIcon(getClass().getResource("/AttendanceManagement/Images_Icons/schoolbackground.jpg")));
@@ -106,11 +107,11 @@ private void login(){
         jPanel1.setOpaque(false);
 
         userName.setBackground(new java.awt.Color(0, 51, 84));
-        userName.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        userName.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         userName.setForeground(new java.awt.Color(255, 255, 255));
 
         passWord.setBackground(new java.awt.Color(0, 51, 84));
-        passWord.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        passWord.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         passWord.setForeground(new java.awt.Color(255, 255, 255));
         passWord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,11 +149,11 @@ private void login(){
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(72, 72, 72)
-                .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(61, 61, 61)
+                .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(passWord, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(passWord, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(157, Short.MAX_VALUE))
         );
@@ -161,17 +162,17 @@ private void login(){
         panel.setLayout(panelLayout);
         panelLayout.setHorizontalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
-                .addContainerGap(465, Short.MAX_VALUE)
+            .addGroup(panelLayout.createSequentialGroup()
+                .addGap(739, 739, 739)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(460, 460, 460))
+                .addContainerGap(744, Short.MAX_VALUE))
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelLayout.createSequentialGroup()
-                .addGap(223, 223, 223)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                .addContainerGap(375, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(133, Short.MAX_VALUE))
+                .addGap(295, 295, 295))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

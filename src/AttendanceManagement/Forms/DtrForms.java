@@ -3,6 +3,7 @@ package AttendanceManagement.Forms;
 
 import AttendanceManagement.Controller.DtrController;
 import AttendanceManagement.Controller.EmployeesController;
+import AttendanceManagement.Controller.WmpAttendanceController;
 import AttendanceManagement.Main.Main;
 import AttendanceManagement.Model.ModelDtr;
 import AttendanceManagement.Model.ModelEmployees;
@@ -37,16 +38,12 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import jnafilechooser.api.JnaFileChooser;
 
-/**
- *
- * @author USER
- */
+
 public class DtrForms extends javax.swing.JPanel {
 
     private EmployeesController employeesController = new EmployeesController();
     private DtrController dtrController = new DtrController();
-   
-   
+
     public DtrForms() {
         
         initComponents();
@@ -90,70 +87,89 @@ private TableCellRenderer getAlignmentCellRenderer(TableCellRenderer oldRender, 
             Component com = oldRender.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             if (com instanceof JLabel) {
                 JLabel label = (JLabel) com;
-                label.setForeground(Color.BLACK); // default color
-
-                setAlignment(label, column);
-
-                if (!header) {
-                    if (column == 1) {
+                
+                // Set default color
+                String department = DepartMent.getText();
+                if ("WMP I".equals(department) || "WMP II".equals(department) || "WMP III".equals(department)) {
+                    label.setForeground(Color.BLACK);
+                } else {
+                    label.setForeground(Color.BLACK); // Default color
+                    if (value != null) {
+                        String valueStr = value.toString();
                         try {
-                            Date cellTime = parseTime(value.toString());
-                            Color color = getThresholdColor(cellTime);
-                            label.setForeground(color);
-                        } catch (ParseException e) {
-                            label.setForeground(Color.BLACK); // default color
-                        }
-                    }
-                     if (column == 3) {
-                       try {
-                            Date cellTime = parseTime(value.toString());
-                            Date thresholdTime = parseTime("1:01 PM");
-                            if (cellTime.before(thresholdTime)) {
-                                label.setForeground(new Color(17, 182, 62)); // green color
-                            } else {
-                                label.setForeground(Color.RED); // red color
+                            if (column == 1) {
+                                Date cellTime = parseTime(valueStr);
+                                Color color = getThresholdColor(cellTime);
+                                label.setForeground(color);
+                            }
+                            if (column == 3) {
+                                Date cellTime = parseTime(valueStr);
+                                Date thresholdTime = parseTime("1:01 PM");
+                                if (cellTime.before(thresholdTime)) {
+                                    label.setForeground(new Color(17, 182, 62)); // green color
+                                } else {
+                                    label.setForeground(Color.RED); // red color
+                                }
                             }
                         } catch (ParseException e) {
-                            label.setForeground(Color.BLACK); // default color
+                            label.setForeground(Color.BLACK); // default color in case of parsing error
                         }
+                    } else {
+                        // Handle the case where the value is null
+                        label.setForeground(Color.BLACK); // default color for null values
                     }
                 }
+                
+                setAlignment(label, column);
             }
             return com;
         }
     };
-            }
+}
 
-  private void setAlignment(JLabel label, int column) {
-            if (column == 0 || column == 7 || column == 3 || column == 6) {
-                label.setHorizontalAlignment(SwingConstants.CENTER);
-            } else {
-                label.setHorizontalAlignment(SwingConstants.CENTER);
-            }
-        }
+private void setAlignment(JLabel label, int column) {
+    label.setHorizontalAlignment(SwingConstants.CENTER);
+}
 
-        private Date parseTime(String time) throws ParseException {
-            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
-            return sdf.parse(time);
-        }
+private Date parseTime(String time) throws ParseException {
+    SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
+    return sdf.parse(time);
+}
 
-        private Color getThresholdColor(Date cellTime) throws ParseException {
-            Date thresholdTime;
-            if (DepartMent.getText().equals("JHS") || DepartMent.getText().equals("SHS")) {
-                thresholdTime = parseTime("7:30 AM");
-            } else if (DepartMent.getText().equals("NTP")) {
-                thresholdTime = parseTime("8:00 AM");
-            } else {
-                throw new RuntimeException("Unknown department");
-            }
+private Color getThresholdColor(Date cellTime) throws ParseException {
+    String department = DepartMent.getText();
 
-            if (cellTime.before(thresholdTime) || cellTime.equals(thresholdTime)) {
+    // Handle specific departments
+    switch (department) {
+        case "JHS":
+        case "SHS":
+            Date thresholdJHS_SHS = parseTime("7:30 AM");
+            if (cellTime.before(thresholdJHS_SHS) || cellTime.equals(thresholdJHS_SHS)) {
                 return new Color(17, 182, 62); // green color
             } else {
                 return Color.RED; // red color
             }
-        }
- 
+
+        case "NTP":
+            Date thresholdNTP = parseTime("8:00 AM");
+            if (cellTime.before(thresholdNTP) || cellTime.equals(thresholdNTP)) {
+                return new Color(17, 182, 62); // green color
+            } else {
+                return Color.RED; // red color
+            }
+
+        case "WMP I":
+        case "WMP II":
+        case "WMP III":
+            // For WMP departments, always return black
+            return Color.BLACK;
+
+        default:
+            System.err.println("Unknown department: " + department);
+            return Color.BLACK; // default color for unknown departments
+    }
+}
+
 
 private void year_monthDATA(){
      Calendar c = Calendar.getInstance();
@@ -193,29 +209,40 @@ private void setTxtFieldDefault(){
       EmployeesImage.setImage(defaultImage);
 }
 private void SearchEmployees(){
-     int searchID = Integer.parseInt(SearchField.getText());
+    int searchID = Integer.parseInt(SearchField.getText());
+    ModelEmployees employees = employeesController.SearchEmployees(searchID);
+    
+    if (employees != null) {
+        String department = employees.getDepartment();
         
-        ModelEmployees employees = employeesController.SearchEmployees(searchID);        
-        if (employees!=null) {           
-            String idStr = Integer.toString(employees.getId());
-             FullName.setText(employees.getFirstName()+" "+employees.getLastName());
-             employeesID.setText(idStr);
-             EmployeesImage.setImage(employees.getEmployeesImage());
-             DepartMent.setText(employees.getDepartment());
-            repaint();
-            revalidate();            
-        }else{
-          setTxtFieldDefault();
+        // Set the employee details
+        String idStr = Integer.toString(employees.getId());
+        FullName.setText(employees.getFirstName() + " " + employees.getLastName());
+        employeesID.setText(idStr);
+        EmployeesImage.setImage(employees.getEmployeesImage());
+        DepartMent.setText(department);
+        
+        // Handle different departments
+        if (department.equals("WMP I") || department.equals("WMP II") || department.equals("WMP III")) {
+            srcWmpDtr();
+        } else {
+            srcDtr();
         }
+        
+        repaint();
+        revalidate();
+    } else {
+        setTxtFieldDefault();
+    }
 }
-private void srchFieldScn(){
-       if (SearchField.getText().trim().isEmpty()) {
+
+private void srchFieldScn() {
+    if (SearchField.getText().trim().isEmpty()) {
         JOptionPane.showMessageDialog(this, "Please input EmployeesID");
         setTxtFieldDefault();
     } else {
         try {
             SearchEmployees();
-             srcDtr();
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Invalid EmployeesID format. Please enter a valid number.");
         } catch (Exception e) {
@@ -224,19 +251,35 @@ private void srchFieldScn(){
         }
     }
 }
-private void srcDtr(){
+
+private void srcDtr() {
     int empIDstr = Integer.parseInt(SearchField.getText());
     int yearStr = Integer.parseInt((String) Year.getSelectedItem());
+    ModelDtr modelDtr = new ModelDtr(empIDstr, (String) Month.getSelectedItem(), yearStr);
     
-      ModelDtr modelDtr = new ModelDtr(empIDstr, (String) Month.getSelectedItem(), yearStr);
     try {
         dtrController.populateDtr(dtrTable, modelDtr);
-         dtrTable.getTableHeader().setDefaultRenderer(getAlignmentCellRenderer(dtrTable.getTableHeader().getDefaultRenderer(), true));
-         dtrTable.setDefaultRenderer(Object.class,getAlignmentCellRenderer(dtrTable.getDefaultRenderer(Object.class), false));
-        
+        dtrTable.getTableHeader().setDefaultRenderer(getAlignmentCellRenderer(dtrTable.getTableHeader().getDefaultRenderer(), true));
+        dtrTable.setDefaultRenderer(Object.class, getAlignmentCellRenderer(dtrTable.getDefaultRenderer(Object.class), false));
     } catch (Exception e) {
         e.printStackTrace();
-    }   
+    }
+}
+
+private void srcWmpDtr() {
+    int empIDstr = Integer.parseInt(SearchField.getText());
+    int yearStr = Integer.parseInt((String) Year.getSelectedItem());
+    WmpAttendanceController attendanceController = new WmpAttendanceController();
+    ModelDtr modelDtr = new ModelDtr(empIDstr, (String) Month.getSelectedItem(), yearStr);
+    modelDtr.setMonths(Month.getSelectedIndex() + 1);
+    
+    try {
+        attendanceController.populateData(dtrTable, modelDtr);
+        dtrTable.getTableHeader().setDefaultRenderer(getAlignmentCellRenderer(dtrTable.getTableHeader().getDefaultRenderer(), true));
+        dtrTable.setDefaultRenderer(Object.class, getAlignmentCellRenderer(dtrTable.getDefaultRenderer(Object.class), false));
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
 }
 private void testReport(){
     try {
@@ -264,6 +307,7 @@ private void testReport(){
         Principal = new javax.swing.JTextField();
         pdf = new javax.swing.JButton();
         excel = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(1145, 659));
 
@@ -422,6 +466,14 @@ private void testReport(){
             }
         });
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/AttendanceManagement/Images_Icons/icons8_search_35px.png"))); // NOI18N
+        jButton1.setToolTipText("Search");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelTableLayout = new javax.swing.GroupLayout(panelTable);
         panelTable.setLayout(panelTableLayout);
         panelTableLayout.setHorizontalGroup(
@@ -430,16 +482,16 @@ private void testReport(){
                 .addContainerGap()
                 .addGroup(panelTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelTableLayout.createSequentialGroup()
+                        .addGroup(panelTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(SearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Month, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(panelTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(panelTableLayout.createSequentialGroup()
-                                .addComponent(Month, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(Year, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(panelTableLayout.createSequentialGroup()
-                                .addComponent(SearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(Principal, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 201, Short.MAX_VALUE)
+                            .addComponent(Principal, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+                            .addComponent(Year, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1)
                     .addGroup(panelTableLayout.createSequentialGroup()
@@ -458,6 +510,7 @@ private void testReport(){
                     .addGroup(panelTableLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(panelTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
                             .addComponent(Principal, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
                             .addComponent(SearchField))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -469,9 +522,9 @@ private void testReport(){
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(view, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(excel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pdf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(view)
+                    .addComponent(excel)
+                    .addComponent(pdf))
                 .addContainerGap())
         );
 
@@ -499,11 +552,11 @@ private void testReport(){
             
             int cmbtoStr = Integer.valueOf((String) Year.getSelectedItem());
             ParamenterAttendance dataprint = new ParamenterAttendance(
-                FullName.getText(),
+                FullName.getText().toUpperCase(),
                 (String) Month.getSelectedItem(),
                 cmbtoStr,
                 list,
-                Principal.getText()
+                Principal.getText().toUpperCase()
             );
 
             ReportManager.getInstance().printAttendanceReport(dataprint);
@@ -546,6 +599,7 @@ private void testReport(){
 
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setDialogTitle("Specify a file to save");
+            fileChooser.setAcceptAllFileFilterUsed(false);
             fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("PDF files", "pdf"));
 
             int userSelection = fileChooser.showSaveDialog(this);
@@ -594,21 +648,35 @@ private void testReport(){
     }
     }//GEN-LAST:event_excelActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+      srchFieldScn();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 private List<FieldReportAttendance> populateFieldReportAttendanceList() {
     List<FieldReportAttendance> list = new ArrayList<>();
     DefaultTableModel data = (DefaultTableModel) dtrTable.getModel();
 
     // Iterate through each row of the table
     for (int i = 0; i < data.getRowCount(); i++) {
-        // Retrieve the values of each column in the current row
-        String col1 = (String) data.getValueAt(i, 0);
-        String col2 = (String) data.getValueAt(i, 1);
-        String col3 = (String) data.getValueAt(i, 2);
-        String col4 = (String) data.getValueAt(i, 3);
-        String col5 = (String) data.getValueAt(i, 4);
-        String col6 = (String) data.getValueAt(i, 5);
-        String col7 = (String) data.getValueAt(i, 6);
-        String col8 = (String) data.getValueAt(i, 7);
+        // Retrieve the values of each column in the current row as Object
+        Object col1Obj = data.getValueAt(i, 0);
+        Object col2Obj = data.getValueAt(i, 1);
+        Object col3Obj = data.getValueAt(i, 2);
+        Object col4Obj = data.getValueAt(i, 3);
+        Object col5Obj = data.getValueAt(i, 4);
+        Object col6Obj = data.getValueAt(i, 5);
+        Object col7Obj = data.getValueAt(i, 6);
+        Object col8Obj = data.getValueAt(i, 7);
+
+        // Convert each column value to String
+        String col1 = col1Obj != null ? col1Obj.toString() : "";
+        String col2 = col2Obj != null ? col2Obj.toString() : "";
+        String col3 = col3Obj != null ? col3Obj.toString() : "";
+        String col4 = col4Obj != null ? col4Obj.toString() : "";
+        String col5 = col5Obj != null ? col5Obj.toString() : "";
+        String col6 = col6Obj != null ? col6Obj.toString() : "";
+        String col7 = col7Obj != null ? col7Obj.toString() : "";
+        String col8 = col8Obj != null ? col8Obj.toString() : "";
 
         // Create a new FieldReportAttendance object with the values and add it to the list
         list.add(new FieldReportAttendance(col1, col2, col3, col4, col5, col6, col7, col8));
@@ -639,6 +707,7 @@ private String ensureExcelExtension(String path) {
 private File showFileChooser() {
     JFileChooser fileChooser = new JFileChooser();
     fileChooser.setDialogTitle("Save Report as Excel");
+    fileChooser.setAcceptAllFileFilterUsed(false);
     fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Excel", "xls"));
 
     int result = fileChooser.showSaveDialog(this);
@@ -661,6 +730,7 @@ private File showFileChooser() {
     private javax.swing.JTable dtrTable;
     private javax.swing.JLabel employeesID;
     private javax.swing.JButton excel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel panelTable;

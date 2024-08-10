@@ -48,7 +48,7 @@ public class Main extends javax.swing.JFrame {
    private AttendanceController attendanceController = new AttendanceController();
     public Main() {
         initComponents();
-//        setExtendedState(Main.MAXIMIZED_BOTH);
+        setExtendedState(Main.MAXIMIZED_BOTH);
          
         GlassPanePopup.install(this);
       
@@ -70,15 +70,14 @@ public class Main extends javax.swing.JFrame {
                 Date dateIssued = item.getDateAssumed();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // Adjust the pattern as needed
                 String dateIssuedStr = sdf.format(dateIssued);
-                String PlantillaInfo = Integer.toString(item.getPlantillaNumber());   
                 employeesForm.firstName.setText(item.getFirstName());
                 employeesForm.id.setText(IDInfo);
                 employeesForm.employeeID.setText(empID);
                 employeesForm.middleName.setText(item.getMiddleName());
                 employeesForm.FamilyName.setText(item.getLastName());
-                employeesForm.position.setText(item.getPosition());
+                employeesForm.position.setSelectedItem(item.getPosition());
                 employeesForm.department.setSelectedItem(item.getDepartment());
-                employeesForm.plantillaItem.setText(PlantillaInfo);
+                employeesForm.plantillaItem.setText(item.getPlantillaNumber());
                 employeesForm.dateAssumed.setText(dateIssuedStr);
                 employeesForm.employeesImage.setImage(item.getEmployeesImage());
                 employeesForm.employeeIDlbl.setText(empID);
@@ -102,6 +101,9 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        popupMenu = new javax.swing.JPopupMenu();
+        teacherTimeRecords = new javax.swing.JMenuItem();
+        wmpTimeRecords = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         panelMoving = new javax.swing.JPanel();
         add = new javax.swing.JButton();
@@ -119,6 +121,24 @@ public class Main extends javax.swing.JFrame {
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         imageBox1 = new AttendanceManagement.Components.ImageBox();
+
+        teacherTimeRecords.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        teacherTimeRecords.setIcon(new javax.swing.ImageIcon(getClass().getResource("/AttendanceManagement/Images_Icons/icons8_teacher_35px.png"))); // NOI18N
+        teacherTimeRecords.setText("Teachers' Time Records");
+        teacherTimeRecords.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                teacherTimeRecordsActionPerformed(evt);
+            }
+        });
+
+        wmpTimeRecords.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        wmpTimeRecords.setIcon(new javax.swing.ImageIcon(getClass().getResource("/AttendanceManagement/Images_Icons/icons8_security_guard_35px.png"))); // NOI18N
+        wmpTimeRecords.setText("WMP Time Records");
+        wmpTimeRecords.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wmpTimeRecordsActionPerformed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -405,7 +425,19 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        showForms(new EmployeesDataForms());
+       
+        popupMenu.add(teacherTimeRecords);
+    popupMenu.add(wmpTimeRecords);
+
+    // Set the size of each menu item based on the size of the button
+    int buttonWidth = jButton7.getWidth();
+    teacherTimeRecords.setPreferredSize(new java.awt.Dimension(buttonWidth, teacherTimeRecords.getPreferredSize().height));
+    wmpTimeRecords.setPreferredSize(new java.awt.Dimension(buttonWidth, wmpTimeRecords.getPreferredSize().height));
+
+    // Show the popup menu at the bottom of the button
+    popupMenu.show(jButton7, 0, jButton7.getHeight());
+      
+       
         
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -428,6 +460,14 @@ public class Main extends javax.swing.JFrame {
     
         GlassPanePopup.showPopup(new AdminProfile());
     }//GEN-LAST:event_imageAvatar1MouseClicked
+
+    private void wmpTimeRecordsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wmpTimeRecordsActionPerformed
+       
+    }//GEN-LAST:event_wmpTimeRecordsActionPerformed
+
+    private void teacherTimeRecordsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teacherTimeRecordsActionPerformed
+        showForms(new EmployeesDataForms());
+    }//GEN-LAST:event_teacherTimeRecordsActionPerformed
   private int x;
   private int y;
        public void initMoving(JFrame frame){
@@ -480,5 +520,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel panelMoving;
+    private javax.swing.JPopupMenu popupMenu;
+    private javax.swing.JMenuItem teacherTimeRecords;
+    private javax.swing.JMenuItem wmpTimeRecords;
     // End of variables declaration//GEN-END:variables
 }

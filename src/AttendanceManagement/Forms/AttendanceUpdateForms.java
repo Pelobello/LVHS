@@ -35,7 +35,7 @@ public class AttendanceUpdateForms extends javax.swing.JPanel {
     }
     
       private boolean Confirmation(){
-        int reply = JOptionPane.showConfirmDialog(this, "Do you want to proceed?", "Confirmation", JOptionPane.YES_NO_OPTION);
+        int reply = JOptionPane.showConfirmDialog(this, "Are you sure you want to update this data?", "Confirmation", JOptionPane.YES_NO_OPTION);
     return reply == JOptionPane.YES_OPTION;
         
     }

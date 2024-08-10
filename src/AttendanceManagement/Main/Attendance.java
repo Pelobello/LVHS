@@ -5,6 +5,7 @@ import AttendanceManagement.Controller.AttendanceController;
 import AttendanceManagement.Controller.EmployeesController;
 import AttendanceManagement.LoginForms.LoginForm;
 import AttendanceManagement.LoginForms.Time_in_out_Form;
+import AttendanceManagement.LoginForms.WmpAttendanceLogs;
 import AttendanceManagement.Model.ModelAttendance;
 import AttendanceManagement.Model.ModelEmployees;
 import com.formdev.flatlaf.FlatClientProperties;
@@ -37,13 +38,15 @@ public class Attendance extends javax.swing.JFrame {
   private Time_in_out_Form time_in_out_Form = new Time_in_out_Form();
   private EmployeesController employeesController = new EmployeesController();
   private AttendanceController attendanceController = new AttendanceController();
+  private WmpAttendanceLogs attendanceLogs = new WmpAttendanceLogs();
     public Attendance() {
         initComponents();
-        
+                setExtendedState(Attendance.MAXIMIZED_BOTH);
         setupKeyBindings();
         mainPanel.setLayout(new BorderLayout());
-          time_in_out_Form.setImage(new ImageIcon(getClass().getResource("/AttendanceManagement/Images_Icons/schoolbackground.jpg")));
-          loginForm.setImage(new ImageIcon(getClass().getResource("/AttendanceManagement/Images_Icons/schoolbackground.jpg")));
+          time_in_out_Form.setImage(new ImageIcon(getClass().getResource("/AttendanceManagement/Images_Icons/schoolbg.jpeg")));
+          loginForm.setImage(new ImageIcon(getClass().getResource("/AttendanceManagement/Images_Icons/schoolbg.jpeg")));
+           attendanceLogs.setImage(new ImageIcon(getClass().getResource("/AttendanceManagement/Images_Icons/schoolbg.jpeg")));
         showForm(time_in_out_Form);
       
     }
@@ -56,10 +59,12 @@ public class Attendance extends javax.swing.JFrame {
         // Define the key strokes for Alt + F1 and Alt + F2
         KeyStroke altF1 = KeyStroke.getKeyStroke(KeyEvent.VK_F1, KeyEvent.ALT_DOWN_MASK);
         KeyStroke altF2 = KeyStroke.getKeyStroke(KeyEvent.VK_F2, KeyEvent.ALT_DOWN_MASK);
+         KeyStroke altF3 = KeyStroke.getKeyStroke(KeyEvent.VK_F3, KeyEvent.ALT_DOWN_MASK);
 
         // Map the key strokes to action keys
         inputMap.put(altF1, "altF1");
         inputMap.put(altF2, "altF2");
+        inputMap.put(altF3, "altF3");
 
         // Define the actions
         actionMap.put("altF1", new AbstractAction() {
@@ -71,11 +76,19 @@ public class Attendance extends javax.swing.JFrame {
             }
         });
 
-        actionMap.put("altF2", new AbstractAction() {
+        actionMap.put("altF3", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                     showForm(loginForm);
+                
+            }
+        });
+        actionMap.put("altF2", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                        
+                showForm(attendanceLogs);
                 
             }
         });
