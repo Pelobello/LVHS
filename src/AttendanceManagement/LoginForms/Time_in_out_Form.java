@@ -50,7 +50,7 @@ public class Time_in_out_Form extends javax.swing.JPanel {
   private AttendanceController attendanceController = new AttendanceController();
     public Time_in_out_Form() {
         initComponents();
-       
+       DepartMent.setVisible(false);
         setOpaque(false);
      
 //        DepartMent.setVisible(false);
@@ -317,6 +317,7 @@ public void clock(){
         arrival.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
         arrival.setForeground(new java.awt.Color(255, 255, 255));
         arrival.setText("TIME IN");
+        arrival.setToolTipText("Alt I (Time In)");
         arrival.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 arrivalActionPerformed(evt);
@@ -327,6 +328,7 @@ public void clock(){
         departure.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
         departure.setForeground(new java.awt.Color(255, 255, 255));
         departure.setText("TIME OUT");
+        departure.setToolTipText("Alt O (Time Out)");
         departure.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 departureActionPerformed(evt);

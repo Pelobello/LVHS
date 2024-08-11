@@ -10,6 +10,7 @@ import AttendanceManagement.Model.ModelAttendance;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.raven.datechooser.DateChooser;
+import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
@@ -185,7 +186,9 @@ public class WmpTimeRecords extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void employeesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_employeesTableMouseClicked
-       int selectedRow = employeesTable.getSelectedRow();
+     
+      
+        int selectedRow = employeesTable.getSelectedRow();
 
     if (selectedRow >= 0) {
         TableModel model = employeesTable.getModel();
@@ -212,6 +215,15 @@ public class WmpTimeRecords extends javax.swing.JPanel {
             public boolean closeWhenPressedEsc() {
               return true;
             }
+
+            @Override
+            public boolean closeWhenClickOutside() {
+               return true;
+            }
+
+          
+            
+            
  
         };
         String action [] = new String[]{"Update","Cancel"};
@@ -224,8 +236,7 @@ public class WmpTimeRecords extends javax.swing.JPanel {
                 controller.UpdateData(wmpAttendanceUpdateForms.getData());
                 loadData();
                 }
-              
-                
+  
             }else{
            GlassPanePopup.closePopupAll();
             pc.consume();

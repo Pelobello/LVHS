@@ -90,6 +90,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="TIME IN"/>
+            <Property name="toolTipText" type="java.lang.String" value="Alt I (Time In)"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="arrivalActionPerformed"/>
@@ -107,6 +108,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="TIME OUT"/>
+            <Property name="toolTipText" type="java.lang.String" value="Alt O (Time Out)"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="departureActionPerformed"/>
