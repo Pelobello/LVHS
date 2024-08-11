@@ -12,6 +12,8 @@ import AttendanceManagement.Forms.EmployeesDataForms;
 import AttendanceManagement.Forms.EmployeesForm;
 import AttendanceManagement.Forms.EmployeesProfileForms;
 import AttendanceManagement.Forms.EmployeesRecords;
+import AttendanceManagement.Forms.TeacherTimeRecords;
+import AttendanceManagement.Forms.WmpTimeRecords;
 import AttendanceManagement.Model.ModelEmployees;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLaf;
@@ -35,6 +37,13 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import raven.glasspanepopup.GlassPanePopup;
+import raven.glasspanepopup.DefaultOption;
+
+
+
+
+
+
 
 
 public class Main extends javax.swing.JFrame {
@@ -50,6 +59,7 @@ public class Main extends javax.swing.JFrame {
         initComponents();
         setExtendedState(Main.MAXIMIZED_BOTH);
          
+        GlassPanePopup.install(this);
         GlassPanePopup.install(this);
       
         changePanel.setLayout(new BorderLayout());
@@ -82,6 +92,7 @@ public class Main extends javax.swing.JFrame {
                 employeesForm.employeesImage.setImage(item.getEmployeesImage());
                 employeesForm.employeeIDlbl.setText(empID);
                 GlassPanePopup.showPopup(employeesForm);
+               
             }
         });
         employeesProfileForms.panelItem.removeAll();
@@ -462,11 +473,11 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_imageAvatar1MouseClicked
 
     private void wmpTimeRecordsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wmpTimeRecordsActionPerformed
-       
+        showForms(new WmpTimeRecords());
     }//GEN-LAST:event_wmpTimeRecordsActionPerformed
 
     private void teacherTimeRecordsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teacherTimeRecordsActionPerformed
-        showForms(new EmployeesDataForms());
+        showForms(new TeacherTimeRecords());
     }//GEN-LAST:event_teacherTimeRecordsActionPerformed
   private int x;
   private int y;

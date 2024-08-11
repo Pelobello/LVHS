@@ -30,7 +30,7 @@ import jnafilechooser.api.JnaFileChooser;
 
 public class EmployeesForm extends javax.swing.JPanel {
     private Main main;
-    private EmployeesDataForms dataForms = new EmployeesDataForms();
+//    private TeachersTimeRecords dataForms = new TeachersTimeRecords();
     private DateChooser dc = new DateChooser();
     private EmployeesController employeesController = new EmployeesController();
     private ModelEmployees modelEmployees = new ModelEmployees();

@@ -28,7 +28,6 @@ public class EmployeesItem extends javax.swing.JPanel {
         profileImage.setImage(data.getEmployeesImage());
         String idData = Integer.toString(data.getId());
         firstName.setText(data.getFirstName()+" "+data.getLastName());
-//        lastName.setText(data.getLastName());
         idNumber.setText(idData);
     }
 

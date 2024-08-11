@@ -12,10 +12,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import raven.glasspanepopup.GlassPanePopup;
 
 
 public class WmpAttendanceController {
@@ -24,6 +29,136 @@ public class WmpAttendanceController {
     public WmpAttendanceController() {
         
     }
+    
+    public List<ModelAttendance>getAll() throws SQLException{
+   
+    try {
+        
+        List<ModelAttendance> list = new ArrayList<>();
+        String sql = "SELECT * FROM wmp_attendancesheet";
+        ps = prepareStatement(sql);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+           int employeesId = rs.getInt("ID");
+            String fullName = rs.getString("Name");
+            String department = rs.getString("Department");
+            
+            Time amTimeIn = rs.getTime("AmTimeIn");
+            Time amTimeOut = rs.getTime("AmTimeOut");
+            Time pmTimeIn = rs.getTime("PmTimeIn");
+            Time pmTimeOut = rs.getTime("PmTimeOut");
+          
+            ModelAttendance attendance = new ModelAttendance();
+            attendance.setEmployeesID(employeesId);
+            attendance.setEmployeesFullName(fullName);
+            attendance.setDepartment(department);
+           attendance.setAmTimeIn(amTimeIn != null ? amTimeIn.toLocalTime() : null);  // Converting to LocalTime
+            attendance.setAmTimeOut(amTimeOut != null ? amTimeOut.toLocalTime() : null); // Fixed setters
+            attendance.setPmTimeIn(pmTimeIn != null ? pmTimeIn.toLocalTime() : null);  // Converting to LocalTime
+            attendance.setPmTimeOut(pmTimeOut != null ? pmTimeOut.toLocalTime() : null); // Fixed setters
+            attendance.setDateCreated(  rs.getDate("DateCreated"));
+           
+
+            list.add(attendance);
+        }
+        
+        
+         return list;
+        
+    } finally{
+        ps.close();
+        rs.close();
+        
+    }
+   
+}
+public List<ModelAttendance>searchData(String search,Date date) throws SQLException{
+   
+    try {
+        
+        List<ModelAttendance> list = new ArrayList<>();
+        String sql = "SELECT * FROM wmp_attendancesheet WHERE Name LIKE ? AND DATE(DateCreated) = ?";
+        ps = prepareStatement(sql);
+        ps.setString(1, "%" + search + "%");
+      java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+        ps.setDate(2, sqlDate);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+           int employeesId = rs.getInt("ID");
+            String fullName = rs.getString("Name");
+            String department = rs.getString("Department");
+            
+            Time amTimeIn = rs.getTime("AmTimeIn");
+            Time amTimeOut = rs.getTime("AmTimeOut");
+            Time pmTimeIn = rs.getTime("PmTimeIn");
+            Time pmTimeOut = rs.getTime("PmTimeOut");
+
+            ModelAttendance attendance = new ModelAttendance();
+            attendance.setEmployeesID(employeesId);
+            attendance.setEmployeesFullName(fullName);
+            attendance.setDepartment(department);
+           attendance.setAmTimeIn(amTimeIn != null ? amTimeIn.toLocalTime() : null);  // Converting to LocalTime
+            attendance.setAmTimeOut(amTimeOut != null ? amTimeOut.toLocalTime() : null); // Fixed setters
+            attendance.setPmTimeIn(pmTimeIn != null ? pmTimeIn.toLocalTime() : null);  // Converting to LocalTime
+            attendance.setPmTimeOut(pmTimeOut != null ? pmTimeOut.toLocalTime() : null); // Fixed setters
+             attendance.setDateCreated(  rs.getDate("DateCreated"));
+
+           
+
+            list.add(attendance);
+        }
+        
+        
+         return list;
+        
+    } finally{
+        ps.close();
+        rs.close();
+        
+    }
+   
+}
+
+public void UpdateData(ModelAttendance data){
+    try {
+        String sql = "UPDATE wmp_attendancesheet SET AmTimeIn = ?,AmTimeOut = ?, PmTimeIn = ?, PmTimeOut = ? WHERE ID = ?";
+        ps = prepareStatement(sql);
+         if (data.getAmTimeIn() != null) {
+            ps.setTime(1, java.sql.Time.valueOf(data.getAmTimeIn()));
+        } else {
+            ps.setNull(1, java.sql.Types.TIME);
+        }
+
+        if (data.getAmTimeOut() != null) {
+            ps.setTime(2, java.sql.Time.valueOf(data.getAmTimeOut()));
+        } else {
+            ps.setNull(2, java.sql.Types.TIME);
+        }
+
+        if (data.getPmTimeIn() != null) {
+            ps.setTime(3, java.sql.Time.valueOf(data.getPmTimeIn()));
+        } else {
+            ps.setNull(3, java.sql.Types.TIME);
+        }
+
+        if (data.getPmTimeOut() != null) {
+            ps.setTime(4, java.sql.Time.valueOf(data.getPmTimeOut()));
+        } else {
+            ps.setNull(4, java.sql.Types.TIME);
+        }
+           ps.setInt(5, data.getEmployeesID());
+          int rowsUpdated = ps.executeUpdate();
+        if (rowsUpdated > 0) {
+            JOptionPane.showMessageDialog(null, "Successfully Updated");
+            GlassPanePopup.closePopupLast();
+        } else {
+            JOptionPane.showMessageDialog(null, "Update Failed");
+        }
+         
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
    public void populateData(JTable table,ModelDtr data) {
     String sql = "WITH RECURSIVE days AS ( " +
                  "    SELECT 1 AS Day " +

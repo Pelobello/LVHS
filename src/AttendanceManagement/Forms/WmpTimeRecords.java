@@ -1,7 +1,11 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ */
 package AttendanceManagement.Forms;
 
 import AttendanceManagement.Controller.AttendanceController;
+import AttendanceManagement.Controller.WmpAttendanceController;
 import AttendanceManagement.Model.ModelAttendance;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
@@ -15,23 +19,24 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-
+import raven.glasspanepopup.GlassPanePopup;
 import java.sql.Time;
 import java.text.ParseException;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import raven.glasspanepopup.GlassPanePopup;
+import javax.swing.JOptionPane;
+import raven.glasspanepopup.DefaultOption;
+import raven.popup.component.SimplePopupBorder;
 
-/**
- *
- * @author USER
- */
-public class EmployeesDataForms extends javax.swing.JPanel {
-    private AttendanceController controller = new AttendanceController();
+
+public class WmpTimeRecords extends javax.swing.JPanel {
+    private WmpAttendanceController controller = new WmpAttendanceController();
     private DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
      private DateChooser dc = new DateChooser();
-    public EmployeesDataForms() {
+    public WmpTimeRecords() {
         initComponents();
         init();
+    
         loadData();
          dc.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
         dc.setTextField(date);
@@ -180,23 +185,56 @@ public class EmployeesDataForms extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void employeesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_employeesTableMouseClicked
-        int selectedRow = employeesTable.getSelectedRow();
+       int selectedRow = employeesTable.getSelectedRow();
 
     if (selectedRow >= 0) {
         TableModel model = employeesTable.getModel();
-        AttendanceUpdateForms forms = new AttendanceUpdateForms(this);
+        ModelAttendance attendanceData = new ModelAttendance();
+
+        int empId = Integer.parseInt(getStringValue(model.getValueAt(selectedRow, 0)));
 
         // Set values to form fields
-        forms.id.setText(getStringValue(model.getValueAt(selectedRow, 0)));
-        forms.fname.setText(getStringValue(model.getValueAt(selectedRow, 1)));
-        forms.department.setText(getStringValue(model.getValueAt(selectedRow, 2)));
-        forms.amArrival.setText(getStringValue(model.getValueAt(selectedRow, 3)));
-        forms.amDeparture.setText(getStringValue(model.getValueAt(selectedRow, 4)));
-        forms.pmArrival.setText(getStringValue(model.getValueAt(selectedRow, 5)));
-        forms.pmDeparture.setText(getStringValue(model.getValueAt(selectedRow, 6)));
-        forms.amArrival.setText(getStringValue(model.getValueAt(selectedRow, 3)));
+        attendanceData.setEmployeesID(empId);
+        attendanceData.setDepartment(getStringValue(model.getValueAt(selectedRow, 2)));
+        attendanceData.setEmployeesFullName(getStringValue(model.getValueAt(selectedRow, 1)));
 
-        GlassPanePopup.showPopup(forms);
+        // Convert time strings to LocalTime
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm"); // Adjust format if needed
+        
+        attendanceData.setAmTimeIn(convertToLocalTime(getStringValue(model.getValueAt(selectedRow, 3)), timeFormatter));
+        attendanceData.setAmTimeOut(convertToLocalTime(getStringValue(model.getValueAt(selectedRow, 4)), timeFormatter));
+        attendanceData.setPmTimeIn(convertToLocalTime(getStringValue(model.getValueAt(selectedRow, 5)), timeFormatter));
+        attendanceData.setPmTimeOut(convertToLocalTime(getStringValue(model.getValueAt(selectedRow, 6)), timeFormatter));
+        
+        WmpAttendanceUpdateForms wmpAttendanceUpdateForms = new WmpAttendanceUpdateForms();
+        DefaultOption option = new DefaultOption() {
+            @Override
+            public boolean closeWhenPressedEsc() {
+              return true;
+            }
+ 
+        };
+        String action [] = new String[]{"Update","Cancel"};
+       
+        GlassPanePopup.showPopup(new SimplePopupBorder(wmpAttendanceUpdateForms, "Update WMP Time Record", action, (pc,i)->{
+         
+          
+            if (i ==0) {
+                if (Confirmation()) {
+                controller.UpdateData(wmpAttendanceUpdateForms.getData());
+                loadData();
+                }
+              
+                
+            }else{
+           GlassPanePopup.closePopupAll();
+            pc.consume();
+            }
+          
+            
+        }),option);
+        wmpAttendanceUpdateForms.setData(attendanceData);
+       
     }
         
     }//GEN-LAST:event_employeesTableMouseClicked
@@ -211,7 +249,7 @@ public class EmployeesDataForms extends javax.swing.JPanel {
         try {
             parsedDate = dateFormat.parse(dateData);
         } catch (ParseException ex) {
-            java.util.logging.Logger.getLogger(EmployeesDataForms.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WmpTimeRecords.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         searchData(searching.getText().trim(), parsedDate);
         }
@@ -219,7 +257,23 @@ public class EmployeesDataForms extends javax.swing.JPanel {
 private String getStringValue(Object value) {
     return value == null ? "" : value.toString();
 }
-
+private LocalTime convertToLocalTime(String timeString, DateTimeFormatter formatter) {
+    if (timeString == null || timeString.trim().isEmpty()) {
+        // Handle empty or null timeString as needed
+        return null; // Or return a default LocalTime, if applicable
+    }
+    try {
+        return LocalTime.parse(timeString, formatter);
+    } catch (DateTimeParseException e) {
+        e.printStackTrace();
+        return null; // Handle the error as needed
+    }
+}
+  private boolean Confirmation(){
+        int reply = JOptionPane.showConfirmDialog(this, "Are you sure you want to update this data?", "Confirmation", JOptionPane.YES_NO_OPTION);
+    return reply == JOptionPane.YES_OPTION;
+        
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField date;
     private javax.swing.JTable employeesTable;
